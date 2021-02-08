@@ -139,13 +139,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Captor.cpp" />
+    <ClCompile Include="Effector.cpp" />
+    <ClCompile Include="JewelPickupEffector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manor.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="VacuumEffector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Captor.h" />
+    <ClInclude Include="Effector.h" />
+    <ClInclude Include="JewelPickupEffector.h" />
     <ClInclude Include="Manor.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="VacuumEffector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

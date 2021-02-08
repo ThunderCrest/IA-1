@@ -53,6 +53,34 @@ int Rand(int min, int max)
 	return range;
 }
 
+void Room::Vacuum()
+{
+	if (m_dirt) 
+	{
+		//Notify dirt pickup
+	}
+	else 
+	{
+		//Notify dirt pickup error
+	}
+
+	if(m_jewel)
+	{
+		//Notify jewel vacuum
+	}
+	setDirt(false);
+	setJewel(false);
+}
+
+void Room::PickupJewel()
+{
+	if (m_jewel)
+	{
+		//Notify jewel pickup
+	}
+	setJewel(false);
+}
+
 void Room::initRoom()
 {
 	int rangeJewel = 0;

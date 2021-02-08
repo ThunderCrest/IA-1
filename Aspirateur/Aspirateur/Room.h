@@ -23,6 +23,8 @@ public:
 	void setAgent(bool isPresent);
 
 	// autre fonction
+	void Vacuum();
+	void PickupJewel();
 
 	void initRoom();
 
