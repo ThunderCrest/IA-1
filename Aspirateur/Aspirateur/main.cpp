@@ -4,7 +4,9 @@
 #include <iostream>
 #include "Room.h"
 #include "Manor.h"
+#include "Agent.h"
 #include <vector>
+#include <thread>
 
 int main()
 {
@@ -29,15 +31,25 @@ int main()
 
     // test Manor
 
-    Manor manor(5, 5);
-    std::vector<Room> rooms = manor.getRooms();
-    for (int n = 0; n < manor.getRooms().size(); ++n)
-    {
-        Room room = manor.getRoom(n);
-        std::cout << "piece : " << room.getX() << "," << room.getY() << "\n";
-        std::cout << "sale : " << room.getDirt() << " et bijou : " << room.getJewel() << "\n\n";
-    }
+    Manor* manor = new Manor(5, 5);
+    std::vector<Room> rooms = manor->getRooms();
+    //for (int n = 0; n < manor.getRooms().size(); ++n)
+    //{
+    //    Room room = manor.getRoom(n);
+    //    std::cout << "piece : " << room.getX() << "," << room.getY() << "\n";
+    //    std::cout << "sale : " << room.getDirt() << " et bijou : " << room.getJewel() << "\n\n";
+    //}
 
+    Agent* agent = new Agent(manor);
+
+    std::thread manorThread(&Manor::Run, manor);
+    std::thread agentThread(&Agent::Run, agent);
+
+    if (agentThread.joinable())agentThread.join();
+    if (agentThread.joinable())agentThread.join();
+
+    delete manor;
+    delete agent;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage

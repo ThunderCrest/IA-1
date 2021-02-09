@@ -67,3 +67,11 @@ std::vector<Room*> Manor::getNotEmptyRoom()
 	return notEmptyRoom;
 }
 
+void Manor::Run()
+{
+	while(true)
+	{
+
+	}
+}
+

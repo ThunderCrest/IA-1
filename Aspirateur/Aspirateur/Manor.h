@@ -19,6 +19,8 @@ public:
 	std::vector<Room*> getNotEmptyRoom();
 	int getIndexRoom(Room room);
 
+	void Run();
+
 private:
 	int m_sizeX;
 	int m_sizeY;
