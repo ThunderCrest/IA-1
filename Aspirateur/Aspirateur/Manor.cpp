@@ -18,6 +18,11 @@ Manor::Manor(int width, int height)
 
 }
 
+Manor::~Manor()
+{
+
+}
+
 int Manor::getSizeX()
 {
 	return m_sizeX;

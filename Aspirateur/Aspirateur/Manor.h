@@ -9,6 +9,7 @@ class Manor
 {
 public:
 	Manor(int width, int height);
+	~Manor();
 
 	int getSizeX();
 	int getSizeY();
@@ -24,3 +25,18 @@ private:
 	int m_sizeY;
 	std::vector<Room> m_rooms;
 };
+
+
+inline std::ostream& operator<<(std::ostream& out, Manor& m)
+{
+	int position = 0;
+	for (int positionX = 0; positionX < m.getSizeX(); ++positionX) {
+		out << " | ";
+		for (int positionY = 0; positionY < m.getSizeY(); ++positionY) {
+			out << m.getRoom(position) << " | ";
+			++position;
+		}
+		out << "\n\n";
+	}
+	return out;
+}

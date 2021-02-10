@@ -8,6 +8,7 @@ class Room
 {
 public:
 	Room(int x, int y);
+	~Room();
 
 	//Accesseur
 
@@ -15,6 +16,7 @@ public:
 	int getY() const;
 	bool getJewel() const;
 	bool getDirt() const;
+	bool getAgent() const;
 
 	//Controller
 
@@ -41,3 +43,12 @@ inline bool operator==(const Room& lhs, const Room& rhs)
 		return true;
 	return false;
 }
+
+inline std::ostream& operator<<(std::ostream& out, Room& r)
+{
+	out << "P : " << r.getDirt() << ", B : " << r.getJewel();
+	if (r.getAgent())
+		out << " Agent ";
+	return out;
+}
+

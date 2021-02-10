@@ -8,35 +8,10 @@
 
 int main()
 {
-    bool isDirty = false;
-    bool isJewel = false;
-    Room room(1, 1);
-
-    // test Room
-
-    //for (int i = 0; i < 20; i++)
-    //{
-    //    room.setDirt(false);
-    //    room.setJewel(false);
-
-    //    room.initRoom();
-    //    isDirty = room.getDirt();
-    //    isJewel = room.getJewel();
-
-    //    std::cout << "la piece est sale ? " << isDirty << "\n";
-    //    std::cout << "Y a t-il un bijou ? " << isJewel << "\n\n";
-    //}
-
-    // test Manor
-
     Manor manor(5, 5);
-    std::vector<Room> rooms = manor.getRooms();
-    for (int n = 0; n < manor.getRooms().size(); ++n)
-    {
-        Room room = manor.getRoom(n);
-        std::cout << "piece : " << room.getX() << "," << room.getY() << "\n";
-        std::cout << "sale : " << room.getDirt() << " et bijou : " << room.getJewel() << "\n\n";
-    }
+    
+    std::cout << manor << "\n";
+    
 
 }
 
