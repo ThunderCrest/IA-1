@@ -1,4 +1,4 @@
-// AgentAspirateur.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
+// AgentAspirateur.cpp : Ce fichier contient la fonction 'main'. L'exï¿½cution du programme commence et se termine ï¿½ cet endroit.
 //
 
 #include <iostream>
@@ -32,6 +32,7 @@ int main()
     // test Manor
 
     Manor* manor = new Manor(5, 5);
+    std::cout << manor << "\n";
     std::vector<Room> rooms = manor->getRooms();
     //for (int n = 0; n < manor.getRooms().size(); ++n)
     //{
@@ -52,13 +53,13 @@ int main()
     delete agent;
 }
 
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
+// Exï¿½cuter le programmeï¿½: Ctrl+F5 ou menu Dï¿½boguerï¿½> Exï¿½cuter sans dï¿½bogage
+// Dï¿½boguer le programmeï¿½: F5 ou menu Dï¿½boguerï¿½> Dï¿½marrer le dï¿½bogage
 
-// Astuces pour bien démarrer : 
-//   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
-//   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
-//   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.
-//   4. Utilisez la fenêtre Liste d'erreurs pour voir les erreurs.
-//   5. Accédez à Projet > Ajouter un nouvel élément pour créer des fichiers de code, ou à Projet > Ajouter un élément existant pour ajouter des fichiers de code existants au projet.
-//   6. Pour rouvrir ce projet plus tard, accédez à Fichier > Ouvrir > Projet et sélectionnez le fichier .sln.
+// Astuces pour bien dï¿½marrerï¿½: 
+//   1. Utilisez la fenï¿½tre Explorateur de solutions pour ajouter des fichiers et les gï¿½rer.
+//   2. Utilisez la fenï¿½tre Team Explorer pour vous connecter au contrï¿½le de code source.
+//   3. Utilisez la fenï¿½tre Sortie pour voir la sortie de la gï¿½nï¿½ration et d'autres messages.
+//   4. Utilisez la fenï¿½tre Liste d'erreurs pour voir les erreurs.
+//   5. Accï¿½dez ï¿½ Projetï¿½> Ajouter un nouvel ï¿½lï¿½ment pour crï¿½er des fichiers de code, ou ï¿½ Projetï¿½> Ajouter un ï¿½lï¿½ment existant pour ajouter des fichiers de code existants au projet.
+//   6. Pour rouvrir ce projet plus tard, accï¿½dez ï¿½ Fichierï¿½> Ouvrirï¿½> Projet et sï¿½lectionnez le fichier .sln.

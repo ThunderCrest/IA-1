@@ -11,6 +11,11 @@ Room::Room(int x, int y)
 
 }
 
+Room::~Room()
+{
+
+}
+
 int Room::getX() const
 {
 	return m_x;
@@ -31,6 +36,11 @@ bool Room::getDirt() const
 	return m_dirt;
 }
 
+bool Room::getAgent() const
+{
+	return m_agent;
+}
+
 void Room::setJewel(bool isPresent)
 {
 	m_jewel = isPresent;
@@ -46,7 +56,7 @@ void Room::setAgent(bool isPresent)
 	m_agent = isPresent;
 }
 
-int Rand(int min, int max)
+int RandInit(int min, int max)
 {
 	int range = 0;
 	range = min + (int)((float)std::rand() * (max - min + 1) / (RAND_MAX - 1));
@@ -84,14 +94,14 @@ void Room::PickupJewel()
 void Room::initRoom()
 {
 	int rangeJewel = 0;
-	rangeJewel = Rand(1, 20);
+	rangeJewel = RandInit(1, 20);
 	if (rangeJewel == 1)
 	{
 		Room::setJewel(true);
 	}
 
 	int rangeDirt = 0;
-	rangeDirt = Rand(1, 2);
+	rangeDirt = RandInit(1, 2);
 	if (rangeDirt == 1)
 	{
 		Room::setDirt(true);

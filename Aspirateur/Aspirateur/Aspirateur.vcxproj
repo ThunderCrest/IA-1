@@ -143,6 +143,7 @@
     <ClCompile Include="Captor.cpp" />
     <ClCompile Include="Effector.cpp" />
     <ClCompile Include="JewelPickupEffector.cpp" />
+    <ClCompile Include="Environment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manor.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Captor.h" />
     <ClInclude Include="Effector.h" />
     <ClInclude Include="JewelPickupEffector.h" />
+    <ClInclude Include="Environment.h" />
     <ClInclude Include="Manor.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="VacuumEffector.h" />
