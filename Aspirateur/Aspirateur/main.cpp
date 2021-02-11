@@ -46,7 +46,23 @@ int main()
     std::thread manorThread(&Manor::Run, manor);
     std::thread agentThread(&Agent::Run, agent);
 
-    if (agentThread.joinable())agentThread.join();
+    std::string input;
+    std::cin >> input;
+
+    while(input != "0")
+    {
+        if (input == "1") 
+        {
+            agent->SwitchExplorationMethod();
+        }
+
+        std::cin >> input;
+    }
+
+    manor->KillManor();
+    agent->KillAgent();
+
+    if (manorThread.joinable())manorThread.join();
     if (agentThread.joinable())agentThread.join();
 
     delete manor;

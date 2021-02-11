@@ -141,23 +141,31 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Captor.cpp" />
+    <ClCompile Include="DustCaptor.cpp" />
     <ClCompile Include="Effector.cpp" />
+    <ClCompile Include="JewelCaptor.cpp" />
     <ClCompile Include="JewelPickupEffector.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manor.cpp" />
+    <ClCompile Include="PerformanceValueCaptor.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="VacuumEffector.cpp" />
+    <ClCompile Include="VacuumPositionCaptor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Captor.h" />
+    <ClInclude Include="DustCaptor.h" />
     <ClInclude Include="Effector.h" />
+    <ClInclude Include="JewelCaptor.h" />
     <ClInclude Include="JewelPickupEffector.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="Manor.h" />
+    <ClInclude Include="PerformanceValueCaptor.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="VacuumEffector.h" />
+    <ClInclude Include="VacuumPositionCaptor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
