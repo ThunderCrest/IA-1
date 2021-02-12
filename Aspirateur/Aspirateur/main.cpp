@@ -3,47 +3,22 @@
 
 #include <iostream>
 #include "Room.h"
-#include "Manor.h"
+#include "Environment.h"
 #include "Agent.h"
 #include <vector>
 #include <thread>
 
 int main()
 {
-    bool isDirty = false;
-    bool isJewel = false;
-    Room room(1, 1);
 
-    // test Room
+    Environment* environment = new Environment();
+    
+    Manor* manor = &environment->getManor();
 
-    //for (int i = 0; i < 20; i++)
-    //{
-    //    room.setDirt(false);
-    //    room.setJewel(false);
-
-    //    room.initRoom();
-    //    isDirty = room.getDirt();
-    //    isJewel = room.getJewel();
-
-    //    std::cout << "la piece est sale ? " << isDirty << "\n";
-    //    std::cout << "Y a t-il un bijou ? " << isJewel << "\n\n";
-    //}
-
-    // test Manor
-
-    Manor* manor = new Manor(5, 5);
-    std::cout << manor << "\n";
-    std::vector<Room> rooms = manor->getRooms();
-    //for (int n = 0; n < manor.getRooms().size(); ++n)
-    //{
-    //    Room room = manor.getRoom(n);
-    //    std::cout << "piece : " << room.getX() << "," << room.getY() << "\n";
-    //    std::cout << "sale : " << room.getDirt() << " et bijou : " << room.getJewel() << "\n\n";
-    //}
 
     Agent* agent = new Agent(manor);
 
-    std::thread manorThread(&Manor::Run, manor);
+    std::thread environmentThread(&Environment::Run, environment);
     std::thread agentThread(&Agent::Run, agent);
 
     std::string input;
@@ -59,10 +34,10 @@ int main()
         std::cin >> input;
     }
 
-    manor->KillManor();
+    environment->KillEnvironment();
     agent->KillAgent();
 
-    if (manorThread.joinable())manorThread.join();
+    if (environmentThread.joinable())environmentThread.join();
     if (agentThread.joinable())agentThread.join();
 
     delete manor;

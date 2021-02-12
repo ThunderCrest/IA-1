@@ -18,13 +18,11 @@ public:
 	Room& getRoom(int position);
 	int findIndex(Room& currentRoom) const;
 	std::vector<Room*> getNotEmptyRoom();
-	int getIndexRoom(Room room);
 
-	void Run();
-	void KillManor() { m_bAlive = false; }
+
 
 private:
-	bool m_bAlive;
+
 	int m_sizeX;
 	int m_sizeY;
 	std::vector<Room> m_rooms;

@@ -3,7 +3,7 @@
 
 Manor::Manor(int width, int height)
 {
-	m_bAlive = true;
+	
 	m_sizeX = width;
 	m_sizeY = height;
 
@@ -73,11 +73,5 @@ std::vector<Room*> Manor::getNotEmptyRoom()
 	return notEmptyRoom;
 }
 
-void Manor::Run()
-{
-	while(m_bAlive)
-	{
 
-	}
-}
 

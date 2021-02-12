@@ -1,5 +1,6 @@
 #include "Agent.h"
 #include "Manor.h"
+#include <cstdlib>
 
 Agent::Agent(Manor* manor)
 {
@@ -17,9 +18,9 @@ void Agent::Run()
 		if(this->m_currentTickTime - this->m_lastTickTime > 0)
 		{
 			this->m_lastTickTime = this->m_currentTickTime;
-			std::cout << m_lastTickTime << std::endl;
-
-			if(this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
+			//std::cout << m_lastTickTime << std::endl;
+		    
+		    if(this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
 			{
 				this->m_currentIterationsToExploration = 0;
 				//Observe

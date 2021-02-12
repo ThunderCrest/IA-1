@@ -1,9 +1,11 @@
 #include "Environment.h"
 
+
 Environment::Environment(): m_manor(Manor(5,5))
 {
 	m_manor = Manor(5, 5);
 	m_gameIsRunning = true;
+	m_bAlive = true;
 }
 
 Environment::~Environment()
@@ -54,4 +56,43 @@ bool Environment::shouldThereBeANewLostJewel() const
 		return false;
 	}
 
+}
+
+void Environment::Run()
+{
+	while (m_bAlive)
+	{
+		this->m_lastTickTime = -1;
+		while (m_bAlive)
+		{
+			time(&this->m_currentTickTime);
+			if (this->m_currentTickTime - this->m_lastTickTime > 0)
+			{
+				this->m_lastTickTime = this->m_currentTickTime;
+				std::cout << "\x1B[2J\x1B[H";
+				std::cout << m_manor << "\n";
+
+				if (shouldThereBeANewDirtySpace() == true)
+				{
+					int range = 0;
+					range = Rand(0, 24);
+					m_manor.getRoom(range).setDirt(true);
+
+				}
+
+				if (shouldThereBeANewLostJewel())
+				{
+					int range = 0;
+					range = Rand(0, 24);
+					Room* room = &m_manor.getRoom(range);
+					room->setJewel(true);
+
+				}
+
+			}
+
+
+
+		}
+	}
 }
