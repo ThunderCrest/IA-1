@@ -2,11 +2,18 @@
 #include "Manor.h"
 #include <cstdlib>
 
-Agent::Agent(Manor* manor)
+
+Agent::Agent(Manor* manor): m_vacuumEffector(VacuumEffector(*this))
 {
 	this->m_manor = manor;
 	m_bAlive = true;
 	m_bUsingInformedMethod = true;
+	m_currentIterationsToExploration = 0;
+	m_currentTickTime = 0;
+	m_iterationsToExploration = 0;
+	m_lastTickTime = 0;
+	currentBelief= AgentBeliefs::AGENTMOVING;
+	currentDesire = AgentDesires::REST;
 }
 
 void Agent::Run()
@@ -24,7 +31,8 @@ void Agent::Run()
 			{
 				this->m_currentIterationsToExploration = 0;
 				//Observe
-				//Explore
+				//Explore TreeSearch
+				//Do it
 			}
 
 
@@ -45,4 +53,46 @@ void Agent::SwitchExplorationMethod()
 	{
 		std::cout << "Using Uninformed" << std::endl;
 	}
+}
+
+
+
+
+void Agent::chooseDesire() {
+
+}
+
+void Agent::choseeBelief(){
+}
+
+void Agent::getCurrentRoom() {
+
+}
+
+void Agent::observe() {
+
+	//update sa position
+	//update les salles avec de la poussière
+	//update les salles avec des bijoux
+	//update sa mesure de performance
+	//Choose Belief/intentions/desire
+}
+
+
+
+std::vector<actions> Agent::constructSolution() { //chooseIntentions
+};
+
+
+
+class nodes; //à créer
+
+std::vector<nodes*> Agent::expand() {
+
+	//dépends des méthodes d'exploration
+	//A*, IDS
+}
+
+void Agent::treeSearch() {
+	//use expand
 }

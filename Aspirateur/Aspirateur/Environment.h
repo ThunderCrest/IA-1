@@ -17,7 +17,7 @@ public:
 
 	void Run();
 	void KillEnvironment() { m_bAlive = false; }
-
+	//performanceMesure -> le score augmente en fonction du nombre de pièces poussièreuses, de sa consommation d'énergie, du nombre de bijoux avalé.
 
 private:
 

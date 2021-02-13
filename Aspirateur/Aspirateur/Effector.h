@@ -9,5 +9,9 @@ protected:
 	//Agent* agent
 public:
 	virtual void ExecuteEffector(Room* room) = 0;
+	//executeAction
+	//move(direction)
+	//aspirate
+	//pick
 };
 
