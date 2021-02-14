@@ -1,7 +1,5 @@
 #pragma once
 
-#include "JewelPickupEffector.h"
-#include "VacuumEffector.h"
 #include "Manor.h"
 #include <vector>;
 
@@ -27,8 +25,6 @@ enum class actions { //à mettre dans effecteur
 class Agent
 {
 private:
-	JewelPickupEffector m_jewelPickupEffector;
-	VacuumEffector m_vacuumEffector;
 
 	Manor* m_manor;
 

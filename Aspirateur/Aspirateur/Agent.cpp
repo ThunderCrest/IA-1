@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 
-Agent::Agent(Manor* manor): m_vacuumEffector(VacuumEffector(*this))
+Agent::Agent(Manor* manor)
 {
 	this->m_manor = manor;
 	m_bAlive = true;
@@ -81,6 +81,7 @@ void Agent::observe() {
 
 
 std::vector<actions> Agent::constructSolution() { //chooseIntentions
+	return std::vector<actions>();
 };
 
 
@@ -91,6 +92,7 @@ std::vector<nodes*> Agent::expand() {
 
 	//dépends des méthodes d'exploration
 	//A*, IDS
+	return std::vector<nodes*>();
 }
 
 void Agent::treeSearch() {
