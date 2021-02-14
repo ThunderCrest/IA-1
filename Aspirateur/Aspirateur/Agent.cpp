@@ -16,7 +16,7 @@ Agent::Agent(Manor* manor)
 	currentDesire = AgentDesires::REST;
 }
 
-void Agent::Run()
+void Agent::run()
 {
 	this->m_lastTickTime = -1;
 	while(m_bAlive)
@@ -42,7 +42,7 @@ void Agent::Run()
 	}
 }
 
-void Agent::SwitchExplorationMethod()
+void Agent::switchExplorationMethod()
 {
 	m_bUsingInformedMethod = !m_bUsingInformedMethod;
 	if(m_bUsingInformedMethod)

@@ -41,15 +41,18 @@ private:
 	int m_iterationsToExploration; 
 	int m_currentIterationsToExploration;
 
+	std::vector<Room*> dustyRooms;
+	std::vector<Room*> jewelRooms;
+
 public:
 
 	Agent(Manor* manor);
 
-	void Run();
+	void run();
 
-	void KillAgent() { m_bAlive = false; }
+	void killAgent() { m_bAlive = false; }
 
-	void SwitchExplorationMethod();
+	void switchExplorationMethod();
 
 	void chooseDesire();
 
