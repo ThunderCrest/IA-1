@@ -140,19 +140,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="AStarExploration.cpp" />
     <ClCompile Include="Captor.cpp" />
     <ClCompile Include="Effector.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manor.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="AStarExploration.h" />
     <ClInclude Include="Captor.h" />
     <ClInclude Include="Effector.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="Manor.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Room.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

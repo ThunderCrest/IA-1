@@ -41,7 +41,7 @@ private:
 	int m_iterationsToExploration; 
 	int m_currentIterationsToExploration;
 
-	std::vector<Room*> dustyRooms;
+	std::vector<Room*> dirtyRooms;
 	std::vector<Room*> jewelRooms;
 
 public:
