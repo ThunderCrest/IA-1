@@ -93,6 +93,7 @@
 			}
 		}
 	}
+
 	void Effector::aspirate() {
 		this->_agent->currentRoom->setDirt(false);
 		this->_agent->currentRoom->setJewel(false);
