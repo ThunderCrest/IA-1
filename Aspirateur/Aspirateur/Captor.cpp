@@ -16,6 +16,7 @@
 			{
 				if (room.getAgent() == true)
 				{
+					this->_agent->currentRoom = &room;
 					return index;
 				}
 				index++;

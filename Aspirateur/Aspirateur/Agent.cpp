@@ -3,8 +3,9 @@
 #include <cstdlib>
 
 
-	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this), currentRoom(&this->m_manor->getRooms()[0])
+	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
 	{
+		currentRoom = new Room(0, 0);
 		this->m_manor = manor;
 		m_bAlive = true;
 		m_bUsingInformedMethod = true;
