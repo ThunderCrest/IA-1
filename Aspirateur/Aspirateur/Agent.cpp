@@ -5,8 +5,8 @@
 
 	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
 	{
-		currentRoom = new Room(0, 0);
 		this->m_manor = manor;
+		currentRoom = &this->m_manor->getRoom(24);
 		m_bAlive = true;
 		m_bUsingInformedMethod = true;
 		m_currentIterationsToExploration = 0;
@@ -34,7 +34,7 @@
 					//Observe
 					//Explore TreeSearch
 					//Do it
-					
+					this->m_effector.goLeft();
 				}
 
 

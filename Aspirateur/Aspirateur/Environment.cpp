@@ -81,8 +81,6 @@ int Environment::getScore()
 
 void Environment::Run()
 {
-	while (m_bAlive)
-	{
 		this->m_lastTickTime = -1;
 		while (m_bAlive)
 		{
@@ -142,6 +140,6 @@ void Environment::Run()
 
 
 		}
-	}
+	
 }
 

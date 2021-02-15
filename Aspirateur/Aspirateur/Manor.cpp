@@ -11,7 +11,7 @@ Manor::Manor(int width, int height)
 	{
 		for (int j = 0; j < m_sizeY; ++j)
 		{
-			Room room(i, j);
+			Room room(j, i);
 			room.initRoom();
 			m_rooms.push_back(room);
 		}
