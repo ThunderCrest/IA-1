@@ -13,7 +13,8 @@
 		goTop,
 		goBottom,
 		pick,
-		aspirate
+		aspirate,
+		none
 	};
 
 

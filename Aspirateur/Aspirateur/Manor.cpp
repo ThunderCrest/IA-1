@@ -1,4 +1,5 @@
 #include "Manor.h"
+#include "Effector.h"
 
 
 Manor::Manor(int width, int height)
@@ -48,6 +49,40 @@ Room& Manor::getRoom(int position)
 	throw std::logic_error("position trop grande");
 }
 
+Room* Manor::getRoomInDirection(Room* currentRoom, actions direction)
+{
+	Room* room;
+	switch (direction)
+	{
+	case actions::goLeft:
+		if(currentRoom->getX() > 0)
+		{
+			return &getRoom(5 * currentRoom->getY() + currentRoom->getX() - 1);
+		}
+		return nullptr;
+	case actions::goRight:
+		if (currentRoom->getX() < 4)
+		{
+			return &getRoom(5 * currentRoom->getY() + currentRoom->getX() + 1);
+		}
+		return nullptr;
+	case actions::goTop:
+		if (currentRoom->getY() > 0)
+		{
+			return &getRoom(5 * currentRoom->getY() + currentRoom->getX() - 5);
+		}
+		return nullptr;
+	case actions::goBottom:
+		if (currentRoom->getY() < 4)
+		{
+			return &getRoom(5 * currentRoom->getY() + currentRoom->getX() + 5);
+		}
+		return nullptr;
+	default:
+		return nullptr;
+	}
+}
+
 int Manor::findIndex(Room& currentRoom) const
 {
 	for (int i = 0; i < m_rooms.size(); ++i)
@@ -72,6 +107,3 @@ std::vector<Room*> Manor::getNotEmptyRoom()
 	}
 	return notEmptyRoom;
 }
-
-
-

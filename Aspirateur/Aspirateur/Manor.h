@@ -4,6 +4,7 @@
 #include <vector>
 #include "Room.h"
 
+enum class actions;
 
 class Manor
 {
@@ -16,6 +17,7 @@ public:
 
 	std::vector<Room>& getRooms();
 	Room& getRoom(int position);
+	Room* getRoomInDirection(Room* currentRoom, actions direction);
 	int findIndex(Room& currentRoom) const;
 	std::vector<Room*> getNotEmptyRoom();
 

@@ -1,5 +1,6 @@
 ﻿#include "Agent.h"
 #include "Manor.h"
+#include "Node.h"
 #include <cstdlib>
 
 
@@ -15,6 +16,18 @@
 		m_lastTickTime = 0;
 		currentBelief = AgentBeliefs::AGENTMOVING;
 		currentDesire = AgentDesires::REST;
+
+		Problem problem;
+		problem.manor = manor;
+		problem.startingRoom = currentRoom;
+		problem.targetRoom = &this->m_manor->getRoom(13);
+
+		Node* currentNode = aStar.graphSearch(problem);
+		while(currentNode != nullptr)
+		{
+			intentions.insert(intentions.begin(), currentNode->actionToReach);
+			currentNode = currentNode->parent;
+		}
 	}
 
 	void Agent::Run()
@@ -34,7 +47,11 @@
 					//Observe
 					//Explore TreeSearch
 					//Do it
-					this->m_effector.goLeft();
+					if(intentions.size() > 0)
+					{
+						m_effector.executeAction(intentions.front());
+						intentions.erase(intentions.begin());
+					}
 				}
 
 

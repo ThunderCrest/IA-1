@@ -3,67 +3,72 @@
 #include "Effector.h"
 #include "Captor.h"
 #include "Manor.h"
+#include "AStarExploration.h"
 #include <vector>;
 
 class nodes;
 
-	enum class AgentBeliefs {
-		AGENTMOVING,
-		AGENTCLEANING,
-		AGENTPICKING
-	};
+enum class AgentBeliefs {
+	AGENTMOVING,
+	AGENTCLEANING,
+	AGENTPICKING
+};
 
-	enum class AgentDesires {
-		CLEAN,
-		REST
-	};
+enum class AgentDesires {
+	CLEAN,
+	REST
+};
 
-	class Agent
-	{
-	private:
-		/*
-		JewelPickupEffector m_jewelPickupEffector;
-		VacuumEffector m_vacuumEffector;
-		*/
-		Effector m_effector;
-		Captor m_captor;
+class Agent
+{
+private:
+	/*
+	JewelPickupEffector m_jewelPickupEffector;
+	VacuumEffector m_vacuumEffector;
+	*/
+	Effector m_effector;
+	Captor m_captor;
 
-		bool m_bAlive;
-		bool m_bUsingInformedMethod;
+	bool m_bAlive;
+	bool m_bUsingInformedMethod;
 
-		AgentBeliefs currentBelief;
+	AgentBeliefs currentBelief;
 
-		AgentDesires currentDesire;
+	AgentDesires currentDesire;
 
-		time_t m_lastTickTime;
-		time_t m_currentTickTime;
+	time_t m_lastTickTime;
+	time_t m_currentTickTime;
 
-		int m_iterationsToExploration;
-		int m_currentIterationsToExploration;
+	int m_iterationsToExploration;
+	int m_currentIterationsToExploration;
 
-	public:
-		Manor* m_manor;
-		Room* currentRoom;
+	AStarExploration aStar;
 
-		Agent(Manor* manor);
+	std::vector<actions> intentions;
 
-		void Run();
+public:
+	Manor* m_manor;
+	Room* currentRoom;
 
-		void KillAgent() { m_bAlive = false; }
+	Agent(Manor* manor);
 
-		void SwitchExplorationMethod();
+	void Run();
 
-		void chooseDesire();
+	void KillAgent() { m_bAlive = false; }
 
-		void choseeBelief();
+	void SwitchExplorationMethod();
 
-		void getDestination();
+	void chooseDesire();
 
-		void observe();
+	void choseeBelief();
 
-		std::vector<actions> constructSolution();
+	void getDestination();
 
-		std::vector<nodes*> expand();
+	void observe();
 
-		void treeSearch();
-	};
+	std::vector<actions> constructSolution();
+
+	std::vector<nodes*> expand();
+
+	void treeSearch();
+};
