@@ -17,17 +17,6 @@
 		currentBelief = AgentBeliefs::AGENTMOVING;
 		currentDesire = AgentDesires::REST;
 
-		Problem problem;
-		problem.manor = manor;
-		problem.startingRoom = currentRoom;
-		problem.targetRoom = &this->m_manor->getRoom(0);
-
-		Node* currentNode = aStar.graphSearch(problem);
-		while(currentNode != nullptr)
-		{
-			intentions.insert(intentions.begin(), currentNode->actionToReach);
-			currentNode = currentNode->parent;
-		}
 	}
 
 	void Agent::Run()
@@ -45,15 +34,11 @@
 				{
 					this->m_currentIterationsToExploration = 0;
 					//Observe
-					//Explore TreeSearch
-					//Do it
-					if(intentions.size() > 0)
-					{
-						m_effector.executeAction(intentions.front());
-						intentions.erase(intentions.begin());
-					}
+					Node* targetNode = treeSearch();
+					constructIntentions(targetNode);
 				}
-
+				actions chosenAction = chooseAction();
+				m_effector.executeAction(chosenAction);
 
 
 				this->m_currentIterationsToExploration++;
@@ -96,11 +81,28 @@
 
 
 
-	std::vector<actions> Agent::constructSolution() { //chooseIntentions
-		std::vector<actions> actionsToDo;
-		actionsToDo.push_back(actions::aspirate);
-		return actionsToDo;
+	void Agent::constructIntentions(Node* node) { //chooseIntentions
+		intentions.clear();
+		while (node != nullptr)
+		{
+			if(node->actionToReach != actions::none)
+			{
+				intentions.insert(intentions.begin(), node->actionToReach);
+			}
+			node = node->parent;
+		}
 	};
+
+	actions Agent::chooseAction()
+	{
+		if (intentions.size() > 0)
+		{
+			actions chosenAction = intentions.front();
+			intentions.erase(intentions.begin());
+			return chosenAction;
+		}
+		return actions::none;
+	}
 
 	std::vector<nodes*> Agent::expand() {
 
@@ -110,7 +112,18 @@
 		return nodes;
 	}
 
-	void Agent::treeSearch() {
-		//use expand
+	Node* Agent::treeSearch() {
+		if(m_bUsingInformedMethod)
+		{
+			Problem problem;
+			problem.startingRoom = currentRoom;
+			problem.manor = m_manor;
+			problem.targetRoom = &m_manor->getRoom(2);
+			return aStar.graphSearch(problem);
+		}
+		else
+		{
+
+		}
 	}
 

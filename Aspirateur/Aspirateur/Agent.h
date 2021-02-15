@@ -19,6 +19,11 @@ enum class AgentDesires {
 	REST
 };
 
+enum class goals {
+	vacuum,
+	pickupJewel
+};
+
 class Agent
 {
 private:
@@ -46,6 +51,23 @@ private:
 
 	std::vector<actions> intentions;
 
+
+	void chooseDesire();
+
+	void choseeBelief();
+
+	void getDestination();
+
+	void observe();
+
+	void constructIntentions(Node* node);
+
+	actions chooseAction();
+
+	std::vector<nodes*> expand();
+
+	Node* treeSearch();
+
 public:
 	Manor* m_manor;
 	Room* currentRoom;
@@ -57,18 +79,4 @@ public:
 	void KillAgent() { m_bAlive = false; }
 
 	void SwitchExplorationMethod();
-
-	void chooseDesire();
-
-	void choseeBelief();
-
-	void getDestination();
-
-	void observe();
-
-	std::vector<actions> constructSolution();
-
-	std::vector<nodes*> expand();
-
-	void treeSearch();
 };

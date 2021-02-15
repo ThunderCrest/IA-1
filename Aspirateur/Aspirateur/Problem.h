@@ -2,12 +2,13 @@
 
 class Room;
 class Manor;
+enum class goals;
 
 struct Problem
 {
 	Room* startingRoom;
 	Room* targetRoom;
 	Manor* manor;
-	/*Goal goal*/
+	goals goal;
 };
 

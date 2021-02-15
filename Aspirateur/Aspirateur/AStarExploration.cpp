@@ -5,6 +5,13 @@
 
 Node* AStarExploration::graphSearch(Problem problem)
 {
+	for(auto pair : roomToNode)
+	{
+		delete pair.second;
+	}
+	roomToNode.clear();
+	fringe.clear();
+
 	Node* initialNode = new Node();
 	initialNode->room = problem.startingRoom;
 	initialNode->cost = 0;
@@ -21,7 +28,7 @@ Node* AStarExploration::graphSearch(Problem problem)
 		std::vector<Node*> expansionResult = expand(currentNode, problem);
 		fringe.insert(fringe.end(), expansionResult.begin(), expansionResult.end());
 		std::sort(fringe.begin(), fringe.end(), [](Node* leftNode, Node* rightNode) { return leftNode->estimatedCost < rightNode->estimatedCost; });
-	}
+ 	}
 
 	return nullptr;
 }
