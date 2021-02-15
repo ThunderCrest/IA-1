@@ -16,10 +16,10 @@ int main()
     Manor* manor = &environment->getManor();
 
 
-    Agent* agent = new Agent(manor);
+   Agent* agent = new  Agent(manor);
 
     std::thread environmentThread(&Environment::Run, environment);
-    std::thread agentThread(&Agent::run, agent);
+    std::thread agentThread(&Agent::Run, agent);
 
     std::string input;
     std::cin >> input;
@@ -28,14 +28,14 @@ int main()
     {
         if (input == "1") 
         {
-            agent->switchExplorationMethod();
+            agent->SwitchExplorationMethod();
         }
 
         std::cin >> input;
     }
 
     environment->KillEnvironment();
-    agent->killAgent();
+    agent->KillAgent();
 
     if (environmentThread.joinable())environmentThread.join();
     if (agentThread.joinable())agentThread.join();
