@@ -11,12 +11,10 @@
 int main()
 {
 
-    Environment* environment = new Environment();
-    
-    Manor* manor = &environment->getManor();
 
-
+    Manor* manor = new Manor(5,5);
     Agent* agent = new Agent(manor);
+    Environment* environment = new Environment(agent, manor);
 
     std::thread environmentThread(&Environment::Run, environment);
     std::thread agentThread(&Agent::run, agent);
