@@ -1,100 +1,99 @@
-#include "Agent.h"
+ï»¿#include "Agent.h"
 #include "Manor.h"
 #include <cstdlib>
 
 
-Agent::Agent(Manor* manor)
-{
-	this->m_manor = manor;
-	m_bAlive = true;
-	m_bUsingInformedMethod = true;
-	m_currentIterationsToExploration = 0;
-	m_currentTickTime = 0;
-	m_iterationsToExploration = 0;
-	m_lastTickTime = 0;
-	currentBelief= AgentBeliefs::AGENTMOVING;
-	currentDesire = AgentDesires::REST;
-}
-
-void Agent::run()
-{
-	this->m_lastTickTime = -1;
-	while(m_bAlive)
+	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
 	{
-		time(&this->m_currentTickTime);
-		if(this->m_currentTickTime - this->m_lastTickTime > 0)
+		currentRoom = new Room(0, 0);
+		this->m_manor = manor;
+		m_bAlive = true;
+		m_bUsingInformedMethod = true;
+		m_currentIterationsToExploration = 0;
+		m_currentTickTime = 0;
+		m_iterationsToExploration = 0;
+		m_lastTickTime = 0;
+		currentBelief = AgentBeliefs::AGENTMOVING;
+		currentDesire = AgentDesires::REST;
+	}
+
+	void Agent::Run()
+	{
+		this->m_lastTickTime = -1;
+		while (m_bAlive)
 		{
-			this->m_lastTickTime = this->m_currentTickTime;
-			//std::cout << m_lastTickTime << std::endl;
-		    
-		    if(this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
+			time(&this->m_currentTickTime);
+			if (this->m_currentTickTime - this->m_lastTickTime > 0)
 			{
-				this->m_currentIterationsToExploration = 0;
-				//Observe
-				//Explore TreeSearch
-				//Do it
+				this->m_lastTickTime = this->m_currentTickTime;
+				//std::cout << m_lastTickTime << std::endl;
+				//std::cout << this->m_captor.getCurrentRoomIndex() << std::endl;
+				if (this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
+				{
+					this->m_currentIterationsToExploration = 0;
+					//Observe
+					//Explore TreeSearch
+					//Do it
+					
+				}
+
+
+
+				this->m_currentIterationsToExploration++;
 			}
-
-
-
-			this->m_currentIterationsToExploration++;
 		}
 	}
-}
 
-void Agent::switchExplorationMethod()
-{
-	m_bUsingInformedMethod = !m_bUsingInformedMethod;
-	if(m_bUsingInformedMethod)
+	void Agent::SwitchExplorationMethod()
 	{
-		std::cout << "Using Informed" << std::endl;
+		m_bUsingInformedMethod = !m_bUsingInformedMethod;
+		if (m_bUsingInformedMethod)
+		{
+			std::cout << "Using Informed" << std::endl;
+		}
+		else
+		{
+			std::cout << "Using Uninformed" << std::endl;
+		}
 	}
-	else
-	{
-		std::cout << "Using Uninformed" << std::endl;
+
+
+
+
+	void Agent::chooseDesire() {
+
 	}
-}
+
+	void choseeBelief() {
+	}
+
+	void Agent::observe() {
+
+		//update sa position
+		//update les salles avec de la poussiï¿½re
+		//update les salles avec des bijoux
+		//update sa mesure de performance
+		//update la room ou il est
+		//Choose Belief/intentions/desire
+	}
 
 
 
+	std::vector<actions> Agent::constructSolution() { //chooseIntentions
+		std::vector<actions> actionsToDo;
+		actionsToDo.push_back(actions::aspirate);
+		return actionsToDo;
+	};
 
-void Agent::chooseDesire() {
+	std::vector<nodes*> Agent::expand() {
 
-}
+		//dÃ©pends des mÃ©thodes d'exploration
+		//A*, IDS
+		std::vector<nodes*> nodes;
+		return nodes;
+	}
 
-void Agent::choseeBelief(){
-}
+	void Agent::treeSearch() {
+		//use expand
+	}
 
-void Agent::getCurrentRoom() {
-
-}
-
-void Agent::observe() {
-
-	//update sa position
-	//update les salles avec de la poussière
-	//update les salles avec des bijoux
-	//update sa mesure de performance
-	//Choose Belief/intentions/desire
-}
-
-
-
-std::vector<actions> Agent::constructSolution() { //chooseIntentions
-	return std::vector<actions>();
-};
-
-
-
-class nodes; //à créer
-
-std::vector<nodes*> Agent::expand() {
-
-	//dépends des méthodes d'exploration
-	//A*, IDS
-	return std::vector<nodes*>();
-}
-
-void Agent::treeSearch() {
-	//use expand
-}
