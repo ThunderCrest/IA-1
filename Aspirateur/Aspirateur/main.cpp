@@ -28,7 +28,6 @@ int main()
         {
             agent->switchExplorationMethod();
         }
-
         std::cin >> input;
     }
 

@@ -1,5 +1,9 @@
 #include "Room.h"
 #include <iostream>
+#include <random>
+#include <time.h>
+#include <stdlib.h>
+
 
 Room::Room(int x, int y)
 {
@@ -58,9 +62,10 @@ void Room::setAgent(bool isPresent)
 
 int RandInit(int min, int max)
 {
-	int range = 0;
-	range = min + (int)((float)std::rand() * (max - min + 1) / (RAND_MAX - 1));
-	return range;
+	std::random_device crypto_random_generator;
+	std::uniform_int_distribution<int> int_distribution(min, max);
+	int result = int_distribution(crypto_random_generator);
+	return result;
 }
 
 void Room::Vacuum()
@@ -94,14 +99,14 @@ void Room::PickupJewel()
 void Room::initRoom()
 {
 	int rangeJewel = 0;
-	rangeJewel = RandInit(1, 20);
+	rangeJewel = RandInit(1, 15);
 	if (rangeJewel == 1)
 	{
 		Room::setJewel(true);
 	}
 
 	int rangeDirt = 0;
-	rangeDirt = RandInit(1, 2);
+	rangeDirt = RandInit(1, 3);
 	if (rangeDirt == 1)
 	{
 		Room::setDirt(true);

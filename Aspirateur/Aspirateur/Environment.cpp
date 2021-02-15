@@ -1,4 +1,8 @@
 #include "Environment.h"
+#include <iostream>
+#include <random>
+#include <time.h>
+#include <stdlib.h>
 
 
 Environment::Environment(Agent* agent, Manor* manor)
@@ -27,9 +31,10 @@ bool Environment::gameIsRunning() const
 
 int Rand(int min, int max)
 {
-	int range = 0;
-	range = min + (int)((float)std::rand() * (max - min + 1) / (RAND_MAX - 1));
-	return range;
+	std::random_device crypto_random_generator;
+	std::uniform_int_distribution<int> int_distribution(min, max);
+	int result = int_distribution(crypto_random_generator);
+	return result;
 }
 
 bool Environment::shouldThereBeANewDirtySpace() const 
@@ -48,7 +53,7 @@ bool Environment::shouldThereBeANewDirtySpace() const
 
 bool Environment::shouldThereBeANewLostJewel() const
 {
-	int range = Rand(1, 20);
+	int range = Rand(1, 15);
 	if (range == 1)
 	{
 		return true;
@@ -79,7 +84,6 @@ void Environment::Run()
 	while (m_bAlive)
 	{
 		this->m_lastTickTime = -1;
-		int currentPositionAgent = 0;
 		while (m_bAlive)
 		{
 			time(&this->m_currentTickTime);
@@ -87,32 +91,36 @@ void Environment::Run()
 			{
 				this->m_lastTickTime = this->m_currentTickTime;
 
-				// ajouter la bonne position de l'agent
-				for (int i = 0; i < m_manor->getRooms().size(); ++i)
-				{
-					if (i == currentPositionAgent)
-					{
-						Room* room = &m_manor->getRoom(i);
-						room->setAgent(true);
-					}
-					else
-					{
-						Room* room = &m_manor->getRoom(i);
-						room->setAgent(false);
-					}
-				}
+				//// ajouter la bonne position de l'agent
+				//for (int i = 0; i < m_manor->getRooms().size(); ++i)
+				//{
+				//	if (i == currentPositionAgent)
+				//	{
+				//		Room* room = &m_manor->getRoom(i);
+				//		room->setAgent(true);
+				//	}
+				//	else
+				//	{
+				//		Room* room = &m_manor->getRoom(i);
+				//		room->setAgent(false);
+				//	}
+				//}
 
 				std::cout << "\x1B[2J\x1B[H";
 				std::cout << *m_manor << "\n";
 
-				std::cout << m_score;
 
 				if (shouldThereBeANewDirtySpace() == true)
 				{
 					int range = 0;
 					range = Rand(0, 24);
-					m_manor->getRoom(range).setDirt(true);
-
+					Room* room = &m_manor->getRoom(range);
+					while (room->getDirt() == true)
+					{
+						range = Rand(0, 24);
+						room = &m_manor->getRoom(range);
+					}
+					room->setDirt(true);
 				}
 
 				if (shouldThereBeANewLostJewel() == true)
@@ -120,6 +128,11 @@ void Environment::Run()
 					int range = 0;
 					range = Rand(0, 24);
 					Room* room = &m_manor->getRoom(range);
+					while (room->getJewel() == true)
+					{
+						range = Rand(0, 24);
+						room = &m_manor->getRoom(range);
+					}
 					room->setJewel(true);
 
 				}

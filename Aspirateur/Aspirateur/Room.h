@@ -61,17 +61,29 @@ inline std::ostream& operator<<(std::ostream& out, Room& r)
 		out << " P ";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 	}
+	else 
+	{
+		out << "   ";
+	}
 	if (r.getJewel())
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		out << " B ";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 	}
+	else
+	{
+		out << "   ";
+	}
 	if (r.getAgent())
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		out << " A ";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+	}
+	else
+	{
+		out << "   ";
 	}
 	return out;
 }
