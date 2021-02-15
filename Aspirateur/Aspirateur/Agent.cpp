@@ -20,7 +20,7 @@
 		Problem problem;
 		problem.manor = manor;
 		problem.startingRoom = currentRoom;
-		problem.targetRoom = &this->m_manor->getRoom(13);
+		problem.targetRoom = &this->m_manor->getRoom(0);
 
 		Node* currentNode = aStar.graphSearch(problem);
 		while(currentNode != nullptr)

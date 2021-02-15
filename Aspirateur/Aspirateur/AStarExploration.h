@@ -23,6 +23,7 @@ private:
 	std::vector<std::pair<actions, Room*>> getSuccessors(Problem problem, Room* room);
 
 	int manhattanDistance(Room* currentRoom, Room* targetRoom);
+	int BirdEyeViewDistance(Room* currentRoom, Room* targetRoom);
 
 public:
 

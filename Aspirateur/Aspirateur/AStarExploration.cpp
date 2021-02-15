@@ -1,6 +1,7 @@
 #include "AStarExploration.h"
 #include "Node.h"
 #include <algorithm>
+#include <math.h>
 
 Node* AStarExploration::graphSearch(Problem problem)
 {
@@ -55,7 +56,7 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 			currentNode->room = result.second;
 			currentNode->parent = node;
 			currentNode->cost = node->cost + 1;
-			currentNode->estimatedCost = node->cost + manhattanDistance(currentNode->room, problem.targetRoom);
+			currentNode->estimatedCost = node->cost + BirdEyeViewDistance(currentNode->room, problem.targetRoom);
 
 			if(!alreadyExists)
 			{
@@ -113,4 +114,11 @@ std::vector<std::pair<actions, Room*>> AStarExploration::getSuccessors(Problem p
 int AStarExploration::manhattanDistance(Room* currentRoom, Room* targetRoom)
 {
 	return std::abs(currentRoom->getX() - targetRoom->getX()) + std::abs(currentRoom->getY() - targetRoom->getY());
+}
+
+int AStarExploration::BirdEyeViewDistance(Room* currentRoom, Room* targetRoom)
+{
+	int difX = currentRoom->getX() - targetRoom->getX();
+	int difY = currentRoom->getY() - targetRoom->getY();
+	return std::sqrt(difX * difX + difY * difY);
 }
