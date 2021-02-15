@@ -1,11 +1,17 @@
 #include "Environment.h"
+#include <iostream>
+#include <random>
+#include <time.h>
+#include <stdlib.h>
 
 
-Environment::Environment(): m_manor(Manor(5,5))
+Environment::Environment(Agent* agent, Manor* manor)
 {
-	m_manor = Manor(5, 5);
+	m_manor = manor;
 	m_gameIsRunning = true;
 	m_bAlive = true;
+	m_agent = agent;
+	m_score = m_manor->getNotEmptyRoom().size();
 }
 
 Environment::~Environment()
@@ -15,7 +21,7 @@ Environment::~Environment()
 
 Manor& Environment::getManor()
 {
-	return m_manor;
+	return *m_manor;
 }
 
 bool Environment::gameIsRunning() const
@@ -25,14 +31,15 @@ bool Environment::gameIsRunning() const
 
 int Rand(int min, int max)
 {
-	int range = 0;
-	range = min + (int)((float)std::rand() * (max - min + 1) / (RAND_MAX - 1));
-	return range;
+	std::random_device crypto_random_generator;
+	std::uniform_int_distribution<int> int_distribution(min, max);
+	int result = int_distribution(crypto_random_generator);
+	return result;
 }
 
 bool Environment::shouldThereBeANewDirtySpace() const 
 {
-	int range = Rand(1, 4);
+	int range = Rand(1, 3);
 	if (range == 1)
 	{
 		return true;
@@ -46,7 +53,7 @@ bool Environment::shouldThereBeANewDirtySpace() const
 
 bool Environment::shouldThereBeANewLostJewel() const
 {
-	int range = Rand(1, 20);
+	int range = Rand(1, 15);
 	if (range == 1)
 	{
 		return true;
@@ -56,6 +63,20 @@ bool Environment::shouldThereBeANewLostJewel() const
 		return false;
 	}
 
+}
+
+void Environment::increaseScore(int a)
+{
+	m_score = m_score + a;
+}
+void Environment::decreaseScore(int a)
+{
+	m_score = m_score - a;
+}
+
+int Environment::getScore()
+{
+	return m_score;
 }
 
 void Environment::Run()
@@ -69,22 +90,49 @@ void Environment::Run()
 			if (this->m_currentTickTime - this->m_lastTickTime > 0)
 			{
 				this->m_lastTickTime = this->m_currentTickTime;
+
+				//// ajouter la bonne position de l'agent
+				//for (int i = 0; i < m_manor->getRooms().size(); ++i)
+				//{
+				//	if (i == currentPositionAgent)
+				//	{
+				//		Room* room = &m_manor->getRoom(i);
+				//		room->setAgent(true);
+				//	}
+				//	else
+				//	{
+				//		Room* room = &m_manor->getRoom(i);
+				//		room->setAgent(false);
+				//	}
+				//}
+
 				std::cout << "\x1B[2J\x1B[H";
-				std::cout << m_manor << "\n";
+				std::cout << *m_manor << "\n";
+
 
 				if (shouldThereBeANewDirtySpace() == true)
 				{
 					int range = 0;
 					range = Rand(0, 24);
-					m_manor.getRoom(range).setDirt(true);
-
+					Room* room = &m_manor->getRoom(range);
+					while (room->getDirt() == true)
+					{
+						range = Rand(0, 24);
+						room = &m_manor->getRoom(range);
+					}
+					room->setDirt(true);
 				}
 
-				if (shouldThereBeANewLostJewel())
+				if (shouldThereBeANewLostJewel() == true)
 				{
 					int range = 0;
 					range = Rand(0, 24);
-					Room* room = &m_manor.getRoom(range);
+					Room* room = &m_manor->getRoom(range);
+					while (room->getJewel() == true)
+					{
+						range = Rand(0, 24);
+						room = &m_manor->getRoom(range);
+					}
 					room->setJewel(true);
 
 				}
@@ -96,3 +144,4 @@ void Environment::Run()
 		}
 	}
 }
+
