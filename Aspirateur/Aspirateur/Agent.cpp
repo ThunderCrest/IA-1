@@ -34,7 +34,7 @@
 				{
 					this->m_currentIterationsToExploration = 0;
 					//Observe
-					Node* targetNode = treeSearch();
+					Node* targetNode = exploration();
 					constructIntentions(targetNode);
 				}
 				actions chosenAction = chooseAction();
@@ -112,7 +112,7 @@
 		return nodes;
 	}
 
-	Node* Agent::treeSearch() {
+	Node* Agent::exploration() {
 		if(m_bUsingInformedMethod)
 		{
 			Problem problem;
@@ -123,7 +123,7 @@
 		}
 		else
 		{
-
+			return nullptr;
 		}
 	}
 

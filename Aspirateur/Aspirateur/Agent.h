@@ -66,7 +66,7 @@ private:
 
 	std::vector<nodes*> expand();
 
-	Node* treeSearch();
+	Node* exploration();
 
 public:
 	Manor* m_manor;
