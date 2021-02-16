@@ -89,24 +89,9 @@ void Environment::Run()
 			{
 				this->m_lastTickTime = this->m_currentTickTime;
 
-				//// ajouter la bonne position de l'agent
-				//for (int i = 0; i < m_manor->getRooms().size(); ++i)
-				//{
-				//	if (i == currentPositionAgent)
-				//	{
-				//		Room* room = &m_manor->getRoom(i);
-				//		room->setAgent(true);
-				//	}
-				//	else
-				//	{
-				//		Room* room = &m_manor->getRoom(i);
-				//		room->setAgent(false);
-				//	}
-				//}
-
 				std::cout << "\x1B[2J\x1B[H";
 				std::cout << *m_manor << "\n";
-
+				std::cout << "mesure de performance : "<< m_score << "\n";
 
 				if (shouldThereBeANewDirtySpace() == true)
 				{
