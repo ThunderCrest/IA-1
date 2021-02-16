@@ -9,25 +9,43 @@
 	int Captor::getCurrentRoomIndex()
 	{
 		int index = 0;
-		
-		if (this->_agent)
-		{
-			for (auto& room : this->_agent->m_manor->getRooms())
+
+			for (auto& room : this->_agent->beliefs.m_manor->getRooms())
 			{
 				if (room.getAgent() == true)
 				{
-					this->_agent->currentRoom = &room;
+					this->_agent->beliefs.currentRoom = &room;
 					return index;
 				}
 				index++;
 			}
-			return -1;
+		return -1 ;
+	}
+
+	std::vector<Room> Captor::getDustyRooms()
+	{
+		std::vector<Room> dustyRooms;
+		for (auto& room : this->_agent->beliefs.m_manor->getRooms())
+		{
+			if (room.getDirt() == true)
+			{
+				dustyRooms.push_back(room);
+			}
 		}
-		else {
-			return -1;
+		return dustyRooms;
+	}
+
+	std::vector<Room> Captor::getRoomsWithJewel()
+	{
+		std::vector<Room> roomsWithJewel;
+		for (auto& room : this->_agent->beliefs.m_manor->getRooms())
+		{
+			if (room.getJewel() == true)
+			{
+				roomsWithJewel.push_back(room);
+			}
 		}
-		
-		return this->_agent->m_manor->getSizeY() ;
+		return roomsWithJewel;
 	}
 
 	int Captor::getPerformanceMesure()

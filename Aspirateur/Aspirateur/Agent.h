@@ -8,10 +8,11 @@
 
 class nodes;
 
-enum class AgentBeliefs {
-	AGENTMOVING,
-	AGENTCLEANING,
-	AGENTPICKING
+struct Beliefs {
+	Room * currentRoom;
+	Manor* m_manor;
+	std::vector<Room> dustyRooms;
+	std::vector<Room> roomsWithJewel;
 };
 
 enum class AgentDesires {
@@ -37,8 +38,6 @@ private:
 	bool m_bAlive;
 	bool m_bUsingInformedMethod;
 
-	AgentBeliefs currentBelief;
-
 	AgentDesires currentDesire;
 
 	time_t m_lastTickTime;
@@ -54,8 +53,6 @@ private:
 
 	void chooseDesire();
 
-	void choseeBelief();
-
 	void getDestination();
 
 	void observe();
@@ -69,10 +66,10 @@ private:
 	Node* exploration();
 
 public:
-	Manor* m_manor;
-	Room* currentRoom;
 
 	Agent(Manor* manor);
+
+	Beliefs beliefs;
 
 	void Run();
 
