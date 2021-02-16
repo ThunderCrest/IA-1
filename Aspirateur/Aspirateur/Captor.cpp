@@ -32,6 +32,7 @@
 				dustyRooms.push_back(room);
 			}
 		}
+		this->_agent->beliefs.dustyRooms = dustyRooms;
 		return dustyRooms;
 	}
 
@@ -45,6 +46,7 @@
 				roomsWithJewel.push_back(room);
 			}
 		}
+		this->_agent->beliefs.roomsWithJewel = roomsWithJewel;
 		return roomsWithJewel;
 	}
 
