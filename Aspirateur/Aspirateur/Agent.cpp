@@ -1,6 +1,7 @@
 ﻿#include "Agent.h"
 #include "Manor.h"
 #include "Node.h"
+#include "Environment.h"
 #include <cstdlib>
 
 
@@ -128,3 +129,7 @@
 		}
 	}
 
+	void Agent::setEnvironment(Environment& environment)
+	{
+		this->environment = &environment;
+	}

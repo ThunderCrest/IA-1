@@ -7,8 +7,9 @@
 #include <vector>;
 
 class nodes;
+class Environment;
 
-struct Beliefs {
+struct Beliefs { // toutes les croyances de l'agent
 	Room * currentRoom;
 	Manor* m_manor;
 	std::vector<Room> dustyRooms;
@@ -28,10 +29,6 @@ enum class goals {
 class Agent
 {
 private:
-	/*
-	JewelPickupEffector m_jewelPickupEffector;
-	VacuumEffector m_vacuumEffector;
-	*/
 	Effector m_effector;
 	Captor m_captor;
 
@@ -70,6 +67,10 @@ public:
 	Agent(Manor* manor);
 
 	Beliefs beliefs;
+
+	Environment*environment;
+
+	void setEnvironment(Environment& environment);
 
 	void Run();
 

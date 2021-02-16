@@ -1,6 +1,6 @@
 #include "Effector.h"
 #include "Agent.h"
-
+#include "Environment.h"
 
 	Effector::Effector(Agent &agent) 
 	{
@@ -49,6 +49,7 @@
 			int index = this->_agent->beliefs.currentRoom->getX() + 5*this->_agent->beliefs.currentRoom->getY();
 			if (index+1 < 25)
 			{
+				this->_agent->environment->increaseScore();
 				this->_agent->beliefs.currentRoom = &this->_agent->beliefs.m_manor->getRoom(index+1);
 				this->_agent->beliefs.currentRoom->setAgent(true);
 			}
@@ -62,6 +63,7 @@
 			int index = this->_agent->beliefs.currentRoom->getX() + 5 * this->_agent->beliefs.currentRoom->getY();
 			if (index - 1 < 25 && index -1 >= 0)
 			{
+				this->_agent->environment->increaseScore();
 				this->_agent->beliefs.currentRoom = &this->_agent->beliefs.m_manor->getRoom(index - 1);
 				this->_agent->beliefs.currentRoom->setAgent(true);
 			}
@@ -74,9 +76,9 @@
 			int index = this->_agent->beliefs.currentRoom->getX() + 5 * this->_agent->beliefs.currentRoom->getY();
 			if (index-5 < 25 && index-5 >=0)
 			{
+				this->_agent->environment->increaseScore();
 				this->_agent->beliefs.currentRoom = &this->_agent->beliefs.m_manor->getRoom(index -5);
 				this->_agent->beliefs.currentRoom->setAgent(true);
-
 			}
 		}
 	}
@@ -87,16 +89,36 @@
 			int index = this->_agent->beliefs.currentRoom->getX() + 5 * this->_agent->beliefs.currentRoom->getY();
 			if (index + 5 < 25)
 			{
+				//gain de point car on fait une action
+				this->_agent->environment->increaseScore();
 				this->_agent->beliefs.currentRoom = &this->_agent->beliefs.m_manor->getRoom(index + 5);
 				this->_agent->beliefs.currentRoom->setAgent(true);
 			}
 		}
 	}
 	void Effector::aspirate() {
-		this->_agent->beliefs.currentRoom->setDirt(false);
-		this->_agent->beliefs.currentRoom->setJewel(false);
+		if (this->_agent->beliefs.currentRoom->getDirt()) {
+			//perte de point car on nettoie ( c'est bien )
+			this->_agent->environment->decreaseScore(3);
+			//gain de point parce que l'on fait une action
+			this->_agent->environment->increaseScore();
+
+			this->_agent->beliefs.currentRoom->setDirt(false);
+			if (this->_agent->beliefs.currentRoom->getJewel()) {
+				//gain de point ( c'est pas bien )
+				this->_agent->environment->increaseScore();
+
+				this->_agent->beliefs.currentRoom->setJewel(false);
+			}
+		}
+
 
 	}
 	void Effector::pick() {
-		this->_agent->beliefs.currentRoom->setJewel(false);
+		if (this->_agent->beliefs.currentRoom->getJewel())
+		{
+			//perte de point ( c'est bien )
+			this->_agent->environment->decreaseScore(3);
+			this->_agent->beliefs.currentRoom->setJewel(false);
+		}
 	}
