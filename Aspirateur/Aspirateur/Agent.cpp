@@ -1,20 +1,21 @@
 ﻿#include "Agent.h"
 #include "Manor.h"
 #include "Node.h"
+#include "Environment.h"
 #include <cstdlib>
 
 
 	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
 	{
-		this->m_manor = manor;
-		currentRoom = &this->m_manor->getRoom(24);
+		this->beliefs.m_manor = manor;
+		beliefs.currentRoom = &this->beliefs.m_manor->getRoom(24);
+		beliefs.currentRoom->setAgent(true);
 		m_bAlive = true;
 		m_bUsingInformedMethod = true;
 		m_currentIterationsToExploration = 0;
 		m_currentTickTime = 0;
 		m_iterationsToExploration = 0;
 		m_lastTickTime = 0;
-		currentBelief = AgentBeliefs::AGENTMOVING;
 		currentDesire = AgentDesires::REST;
 
 	}
@@ -32,14 +33,17 @@
 				//std::cout << this->m_captor.getCurrentRoomIndex() << std::endl;
 				if (this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
 				{
+					
 					this->m_currentIterationsToExploration = 0;
 					//Observe
 					Node* targetNode = exploration();
 					constructIntentions(targetNode);
+					
 				}
+				
 				actions chosenAction = chooseAction();
 				m_effector.executeAction(chosenAction);
-
+				
 
 				this->m_currentIterationsToExploration++;
 			}
@@ -66,8 +70,6 @@
 
 	}
 
-	void choseeBelief() {
-	}
 
 	void Agent::observe() {
 
@@ -116,9 +118,9 @@
 		if(m_bUsingInformedMethod)
 		{
 			Problem problem;
-			problem.startingRoom = currentRoom;
-			problem.manor = m_manor;
-			problem.targetRoom = &m_manor->getRoom(2);
+			problem.startingRoom = beliefs.currentRoom;
+			problem.manor = beliefs.m_manor;
+			problem.targetRoom = &beliefs.m_manor->getRoom(2);
 			return aStar.graphSearch(problem);
 		}
 		else
@@ -127,3 +129,7 @@
 		}
 	}
 
+	void Agent::setEnvironment(Environment& environment)
+	{
+		this->environment = &environment;
+	}

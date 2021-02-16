@@ -3,9 +3,6 @@
 #include "Room.h"
 #include <vector>
 
-//class Agent
-
-
 	class Agent; //Forward Declaration
 	enum class actions {
 		goRight,

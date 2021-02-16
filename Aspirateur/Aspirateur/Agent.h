@@ -7,11 +7,13 @@
 #include <vector>;
 
 class nodes;
+class Environment;
 
-enum class AgentBeliefs {
-	AGENTMOVING,
-	AGENTCLEANING,
-	AGENTPICKING
+struct Beliefs { // toutes les croyances de l'agent
+	Room * currentRoom;
+	Manor* m_manor;
+	std::vector<Room> dustyRooms;
+	std::vector<Room> roomsWithJewel;
 };
 
 enum class AgentDesires {
@@ -27,17 +29,11 @@ enum class goals {
 class Agent
 {
 private:
-	/*
-	JewelPickupEffector m_jewelPickupEffector;
-	VacuumEffector m_vacuumEffector;
-	*/
 	Effector m_effector;
 	Captor m_captor;
 
 	bool m_bAlive;
 	bool m_bUsingInformedMethod;
-
-	AgentBeliefs currentBelief;
 
 	AgentDesires currentDesire;
 
@@ -54,8 +50,6 @@ private:
 
 	void chooseDesire();
 
-	void choseeBelief();
-
 	void getDestination();
 
 	void observe();
@@ -69,10 +63,14 @@ private:
 	Node* exploration();
 
 public:
-	Manor* m_manor;
-	Room* currentRoom;
 
 	Agent(Manor* manor);
+
+	Beliefs beliefs;
+
+	Environment*environment;
+
+	void setEnvironment(Environment& environment);
 
 	void Run();
 
