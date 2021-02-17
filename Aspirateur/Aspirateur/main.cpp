@@ -8,6 +8,7 @@
 #include <vector>
 #include <thread>
 
+
 int main()
 {
 
@@ -16,6 +17,10 @@ int main()
     Agent* agent = new Agent(manor);
     Environment* environment = new Environment(agent, manor);
     agent->setEnvironment(*environment);
+
+    std::cout << *manor << "\n";
+    std::cout << "mesure de performance : " << environment->getScore() << "\n";
+    Sleep(1000);
 
     std::thread environmentThread(&Environment::Run, environment);
     std::thread agentThread(&Agent::Run, agent);
