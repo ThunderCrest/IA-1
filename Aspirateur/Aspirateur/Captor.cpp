@@ -1,6 +1,6 @@
 #include "Captor.h"
 #include "Agent.h"
-
+#include "Environment.h"
 	Captor::Captor(Agent &agent)
 	{
 		this->_agent = &agent;
@@ -52,6 +52,5 @@
 
 	int Captor::getPerformanceMesure()
 	{
-		//see with Mona Le Coz 
-		return 0;
+		return this->_agent->environment->getScore();
 	}
