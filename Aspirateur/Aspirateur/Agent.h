@@ -15,6 +15,8 @@ struct Beliefs { // toutes les croyances de l'agent
 	Manor* m_manor;
 	std::vector<Room*> dustyRooms;
 	std::vector<Room*> roomsWithJewel;
+	int performanceMesure;
+	int lastPerformanceMesure;
 };
 
 enum class AgentDesires {
@@ -35,6 +37,7 @@ private:
 
 	bool m_bAlive;
 	bool m_bUsingInformedMethod;
+	bool m_bFirstIterationDone;
 
 	AgentDesires currentDesire;
 
@@ -43,6 +46,9 @@ private:
 
 	int m_iterationsToExploration;
 	int m_currentIterationsToExploration;
+	int m_minIterations;
+	int m_maxIterations;
+	int m_iterationModifier;
 
 	AStarExploration aStar;
 	IterativeDeepeningSearch IDS;
@@ -50,7 +56,7 @@ private:
 	std::vector<actions> intentions;
 
 
-	void chooseDesire();
+	void updateState();
 
 	void observe();
 
@@ -70,9 +76,13 @@ public:
 
 	void setEnvironment(Environment& environment);
 
-	void Run();
+	void run();
 
-	void KillAgent() { m_bAlive = false; }
+	void killAgent() { m_bAlive = false; }
 
-	void SwitchExplorationMethod();
+	void switchExplorationMethod();
+
+	bool getFirstIterationDone() { return m_bFirstIterationDone; }
+
+	int getIterationsToExploration() { return m_iterationsToExploration; }
 };

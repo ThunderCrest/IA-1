@@ -22,8 +22,8 @@ int main()
     std::cout << "mesure de performance : " << environment->getScore() << "\n";
     Sleep(1000);
 
-    std::thread environmentThread(&Environment::Run, environment);
-    std::thread agentThread(&Agent::Run, agent);
+    std::thread environmentThread(&Environment::run, environment);
+    std::thread agentThread(&Agent::run, agent);
 
     std::string input;
     std::cin >> input;
@@ -32,13 +32,13 @@ int main()
     {
         if (input == "1") 
         {
-            agent->SwitchExplorationMethod();
+            agent->switchExplorationMethod();
         }
         std::cin >> input;
     }
 
-    environment->KillEnvironment();
-    agent->KillAgent();
+    environment->killEnvironment();
+    agent->killAgent();
 
     if (environmentThread.joinable())environmentThread.join();
     if (agentThread.joinable())agentThread.join();

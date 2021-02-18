@@ -16,8 +16,8 @@ public:
 	bool shouldThereBeANewDirtySpace() const;
 	bool shouldThereBeANewLostJewel() const;
 
-	void Run();
-	void KillEnvironment() { m_bAlive = false; }
+	void run();
+	void killEnvironment() { m_bAlive = false; }
 
 	void increaseScore(int a = 1);
 	void decreaseScore(int a = 1);

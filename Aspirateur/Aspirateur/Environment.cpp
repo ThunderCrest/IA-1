@@ -79,7 +79,7 @@ int Environment::getScore()
 	return m_score;
 }
 
-void Environment::Run()
+void Environment::run()
 {
 	this->m_lastTickTime = -1;
 	while (m_bAlive)
@@ -92,6 +92,8 @@ void Environment::Run()
 			std::cout << "\x1B[2J\x1B[H";
 			std::cout << *m_manor << "\n";
 			std::cout << "mesure de performance : "<< m_score << "\n";
+			std::cout << "first done: " << m_agent->getFirstIterationDone() << "\n";
+			std::cout << "iterations to exploration: " << m_agent->getIterationsToExploration() << "\n";
 
 			if (shouldThereBeANewDirtySpace() == true)
 			{
