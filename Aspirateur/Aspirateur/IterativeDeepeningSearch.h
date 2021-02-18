@@ -6,13 +6,25 @@
 #include <stdlib.h>
 #include "Problem.h"
 
-class Node;
 enum class actions;
-class AStarExploration
+class Node;
+
+enum class Result
+{
+	success,
+	failure,
+	cutoff
+};
+
+struct DLSResult 
+{
+	Node* resultNode = nullptr;
+	Result result = Result::failure;
+};
+
+class IterativeDeepeningSearch
 {
 private:
-
-	std::vector<Node*> fringe;
 
 	std::map<Room*, Node*> roomToNode;
 
@@ -22,10 +34,13 @@ private:
 
 	std::vector<std::pair<actions, Room*>> getSuccessors(Problem problem, Room* room);
 
+	DLSResult DepthLimitedSearch(Problem problem, int limit);
+
+	DLSResult RecursiveDLS(Node* node, Problem problem, int limit);
+
+
+
 public:
-
-	Node* graphSearch(Problem problem);
-
-	static int BirdEyeViewDistance(const Room* currentRoom, const Room* targetRoom);
+	Node* treeSearch(Problem problem);
 };
 

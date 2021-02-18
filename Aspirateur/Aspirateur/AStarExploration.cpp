@@ -7,7 +7,7 @@ Node* AStarExploration::graphSearch(Problem problem)
 {
 	for(auto pair : roomToNode)
 	{
-		delete pair.second;
+		//delete pair.second;
 	}
 	roomToNode.clear();
 	fringe.clear();
@@ -64,6 +64,7 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 			currentNode->parent = node;
 			currentNode->cost = node->cost + 1;
 			currentNode->estimatedCost = node->cost + BirdEyeViewDistance(currentNode->room, problem.targetRoom);
+			currentNode->depth = node->depth + 1;
 
 			if(!alreadyExists)
 			{
@@ -118,12 +119,7 @@ std::vector<std::pair<actions, Room*>> AStarExploration::getSuccessors(Problem p
 	return successors;
 }
 
-int AStarExploration::manhattanDistance(Room* currentRoom, Room* targetRoom)
-{
-	return std::abs(currentRoom->getX() - targetRoom->getX()) + std::abs(currentRoom->getY() - targetRoom->getY());
-}
-
-int AStarExploration::BirdEyeViewDistance(Room* currentRoom, Room* targetRoom)
+int AStarExploration::BirdEyeViewDistance(const Room* currentRoom, const Room* targetRoom)
 {
 	int difX = currentRoom->getX() - targetRoom->getX();
 	int difY = currentRoom->getY() - targetRoom->getY();

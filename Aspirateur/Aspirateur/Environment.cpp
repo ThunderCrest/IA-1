@@ -81,50 +81,45 @@ int Environment::getScore()
 
 void Environment::Run()
 {
-		this->m_lastTickTime = -1;
-		while (m_bAlive)
+	this->m_lastTickTime = -1;
+	while (m_bAlive)
+	{
+		time(&this->m_currentTickTime);
+		if (this->m_currentTickTime - this->m_lastTickTime > 0)
 		{
-			time(&this->m_currentTickTime);
-			if (this->m_currentTickTime - this->m_lastTickTime > 0)
+			this->m_lastTickTime = this->m_currentTickTime;
+
+			std::cout << "\x1B[2J\x1B[H";
+			std::cout << *m_manor << "\n";
+			std::cout << "mesure de performance : "<< m_score << "\n";
+
+			if (shouldThereBeANewDirtySpace() == true)
 			{
-				this->m_lastTickTime = this->m_currentTickTime;
-
-				std::cout << "\x1B[2J\x1B[H";
-				std::cout << *m_manor << "\n";
-				std::cout << "mesure de performance : "<< m_score << "\n";
-
-				if (shouldThereBeANewDirtySpace() == true)
+				int range = 0;
+				range = Rand(0, 24);
+				Room* room = &m_manor->getRoom(range);
+				while (room->getDirt() == true)
 				{
-					int range = 0;
 					range = Rand(0, 24);
-					Room* room = &m_manor->getRoom(range);
-					while (room->getDirt() == true)
-					{
-						range = Rand(0, 24);
-						room = &m_manor->getRoom(range);
-					}
-					room->setDirt(true);
+					room = &m_manor->getRoom(range);
 				}
-
-				if (shouldThereBeANewLostJewel() == true)
-				{
-					int range = 0;
-					range = Rand(0, 24);
-					Room* room = &m_manor->getRoom(range);
-					while (room->getJewel() == true)
-					{
-						range = Rand(0, 24);
-						room = &m_manor->getRoom(range);
-					}
-					room->setJewel(true);
-
-				}
-
+				room->setDirt(true);
 			}
 
+			if (shouldThereBeANewLostJewel() == true)
+			{
+				int range = 0;
+				range = Rand(0, 24);
+				Room* room = &m_manor->getRoom(range);
+				while (room->getJewel() == true)
+				{
+					range = Rand(0, 24);
+					room = &m_manor->getRoom(range);
+				}
+				room->setJewel(true);
 
-
+			}
 		}
-	
+	}	
 }
 

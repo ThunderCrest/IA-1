@@ -10,5 +10,6 @@ struct Node
 	actions actionToReach = actions::none;
 	int cost = INT_MAX;
 	int estimatedCost = INT_MAX;
+	int depth = 0;
 };
 

@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "Environment.h"
 #include <cstdlib>
+#include <algorithm>
 
 
 	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
@@ -12,9 +13,9 @@
 		beliefs.currentRoom->setAgent(true);
 		m_bAlive = true;
 		m_bUsingInformedMethod = true;
-		m_currentIterationsToExploration = 0;
+		m_currentIterationsToExploration = 5;
 		m_currentTickTime = 0;
-		m_iterationsToExploration = 0;
+		m_iterationsToExploration = 5;
 		m_lastTickTime = 0;
 		currentDesire = AgentDesires::REST;
 
@@ -29,15 +30,13 @@
 			if (this->m_currentTickTime - this->m_lastTickTime > 0)
 			{
 				this->m_lastTickTime = this->m_currentTickTime;
-				//std::cout << m_lastTickTime << std::endl;
-				//std::cout << this->m_captor.getCurrentRoomIndex() << std::endl;
 				if (this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
 				{
 					
 					this->m_currentIterationsToExploration = 0;
-					//Observe
-					Node* targetNode = exploration();
-					constructIntentions(targetNode);
+					observe();
+					std::vector<std::pair<Node*, goals>> targetNodes = exploration();
+					constructIntentions(targetNodes);
 					
 				}
 				
@@ -73,25 +72,38 @@
 
 	void Agent::observe() {
 
-		//update sa position
-		//update les salles avec de la poussi�re
-		//update les salles avec des bijoux
-		//update sa mesure de performance
-		//update la room ou il est
-		//Choose Belief/intentions/desire
+		beliefs.currentRoom = &beliefs.m_manor->getRoom(m_captor.getCurrentRoomIndex());
+		beliefs.dustyRooms = m_captor.getDustyRooms();
+		beliefs.roomsWithJewel = m_captor.getRoomsWithJewel();
 	}
 
 
 
-	void Agent::constructIntentions(Node* node) { //chooseIntentions
+	void Agent::constructIntentions(std::vector<std::pair<Node*, goals>> targetNodes) { //chooseIntentions
 		intentions.clear();
-		while (node != nullptr)
+
+		for (auto pair : targetNodes)
 		{
-			if(node->actionToReach != actions::none)
+			std::vector<actions> actions;
+			Node* currentNode = pair.first;
+			while (currentNode != nullptr)
 			{
-				intentions.insert(intentions.begin(), node->actionToReach);
+				if (currentNode->actionToReach != actions::none)
+				{
+					actions.insert(actions.begin(), currentNode->actionToReach);
+				}
+				currentNode = currentNode->parent;
 			}
-			node = node->parent;
+			switch (pair.second)
+			{
+			case goals::pickupJewel:
+				actions.insert(actions.end(), actions::pick);
+				break;
+			case goals::vacuum:
+				actions.insert(actions.end(), actions::aspirate);
+				break;
+			}
+			intentions.insert(intentions.end(), actions.begin(), actions.end());
 		}
 	};
 
@@ -106,27 +118,67 @@
 		return actions::none;
 	}
 
-	std::vector<nodes*> Agent::expand() {
+	std::vector<std::pair<Node*, goals>> Agent::exploration() {
+		
+		Problem problem;
+		problem.manor = beliefs.m_manor;
 
-		//dépends des méthodes d'exploration
-		//A*, IDS
-		std::vector<nodes*> nodes;
-		return nodes;
-	}
+		problem.startingRoom = beliefs.currentRoom;
+		std::vector<std::pair<Node*, goals>> resultNodes;
+		std::vector<Room*> jewelRooms = beliefs.roomsWithJewel;
+		std::vector<Room*> dustyRooms = beliefs.dustyRooms;
 
-	Node* Agent::exploration() {
-		if(m_bUsingInformedMethod)
+		while(jewelRooms.size() > 0 || dustyRooms.size() > 0)
 		{
-			Problem problem;
-			problem.startingRoom = beliefs.currentRoom;
-			problem.manor = beliefs.m_manor;
-			problem.targetRoom = &beliefs.m_manor->getRoom(2);
-			return aStar.graphSearch(problem);
+			std::vector<Room*> targetRooms;
+			targetRooms.insert(targetRooms.end(), jewelRooms.begin(), jewelRooms.end());
+			targetRooms.insert(targetRooms.end(), dustyRooms.begin(), dustyRooms.end());
+			std::sort(targetRooms.begin(), targetRooms.end(), [problem, jewelRooms](const Room* leftRoom, const Room* rightRoom)
+				{
+					int leftDistance = AStarExploration::BirdEyeViewDistance(problem.startingRoom, leftRoom);
+					int rightDistance = AStarExploration::BirdEyeViewDistance(problem.startingRoom, rightRoom);
+
+					if(leftDistance != rightDistance)
+					{
+						return leftDistance < rightDistance;
+					}
+					else
+					{						
+						return std::find(jewelRooms.begin(), jewelRooms.end(), leftRoom) != jewelRooms.end() && std::find(jewelRooms.begin(), jewelRooms.end(), rightRoom) == jewelRooms.end();
+					}
+				});
+
+			problem.targetRoom = targetRooms.front();
+			auto it = std::find(jewelRooms.begin(), jewelRooms.end(), problem.targetRoom);
+			if (it != jewelRooms.end())
+			{
+				jewelRooms.erase(it);
+				problem.goal = goals::pickupJewel;
+			}
+			else if ((it = std::find(dustyRooms.begin(), dustyRooms.end(), problem.targetRoom)) != dustyRooms.end())
+			{
+				dustyRooms.erase(it);
+				problem.goal = goals::vacuum;
+			}
+
+			Node* node = nullptr;
+			if (m_bUsingInformedMethod)
+			{
+				node = aStar.graphSearch(problem);
+			}
+			else
+			{
+				node = aStar.graphSearch(problem);
+
+			}
+			if (node != nullptr)
+			{
+				resultNodes.push_back(std::pair<Node*, goals>(node, problem.goal));
+				problem.startingRoom = node->room;
+			}
 		}
-		else
-		{
-			return nullptr;
-		}
+
+		return resultNodes;
 	}
 
 	void Agent::setEnvironment(Environment& environment)

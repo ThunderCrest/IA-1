@@ -144,6 +144,7 @@
     <ClCompile Include="Captor.cpp" />
     <ClCompile Include="Effector.cpp" />
     <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="IterativeDeepeningSearch.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manor.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Captor.h" />
     <ClInclude Include="Effector.h" />
     <ClInclude Include="Environment.h" />
+    <ClInclude Include="IterativeDeepeningSearch.h" />
     <ClInclude Include="Manor.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Problem.h" />

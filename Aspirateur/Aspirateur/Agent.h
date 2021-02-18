@@ -4,6 +4,7 @@
 #include "Captor.h"
 #include "Manor.h"
 #include "AStarExploration.h"
+#include "IterativeDeepeningSearch.h"
 #include <vector>;
 
 class nodes;
@@ -12,8 +13,8 @@ class Environment;
 struct Beliefs { // toutes les croyances de l'agent
 	Room * currentRoom;
 	Manor* m_manor;
-	std::vector<Room> dustyRooms;
-	std::vector<Room> roomsWithJewel;
+	std::vector<Room*> dustyRooms;
+	std::vector<Room*> roomsWithJewel;
 };
 
 enum class AgentDesires {
@@ -44,23 +45,20 @@ private:
 	int m_currentIterationsToExploration;
 
 	AStarExploration aStar;
+	IterativeDeepeningSearch IDS;
 
 	std::vector<actions> intentions;
 
 
 	void chooseDesire();
 
-	void getDestination();
-
 	void observe();
 
-	void constructIntentions(Node* node);
+	void constructIntentions(std::vector<std::pair<Node*, goals>> targetNodes);
 
 	actions chooseAction();
 
-	std::vector<nodes*> expand();
-
-	Node* exploration();
+	std::vector<std::pair<Node*, goals>> exploration();
 
 public:
 
