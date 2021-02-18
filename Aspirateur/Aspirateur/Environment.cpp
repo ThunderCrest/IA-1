@@ -92,7 +92,8 @@ void Environment::run()
 			std::cout << "\x1B[2J\x1B[H";
 			std::cout << *m_manor << "\n";
 			std::cout << "mesure de performance : "<< m_score << "\n";
-			std::cout << "first done: " << m_agent->getFirstIterationDone() << "\n";
+			std::cout << "Methode: " << ((m_agent->getUsingInformedMethod()) ? "Informed" : "Uninformed") << "\n";
+			std::cout << "first iteration done: " << ((m_agent->getFirstIterationDone()) ? "true" : "false") << "\n";
 			std::cout << "iterations to exploration: " << m_agent->getIterationsToExploration() << "\n";
 
 			if (shouldThereBeANewDirtySpace() == true)

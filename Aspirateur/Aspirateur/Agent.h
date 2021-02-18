@@ -84,5 +84,7 @@ public:
 
 	bool getFirstIterationDone() { return m_bFirstIterationDone; }
 
+	bool getUsingInformedMethod() { return m_bUsingInformedMethod; }
+
 	int getIterationsToExploration() { return m_iterationsToExploration; }
 };
