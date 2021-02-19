@@ -101,7 +101,7 @@ void Environment::run()
 
 			// Réaffiche les pièces du manoir et les informations importantes toute les secondes
 
-			std::cout << "\x1B[2J\x1B[H";
+			system("CLS");
 			std::cout << *m_manor << "\n";
 			std::cout << "mesure de performance: "<< m_score << "\n";
 			std::cout << "Methode: " << ((m_agent->getUsingInformedMethod()) ? "Informed" : "Uninformed") << "\n";
