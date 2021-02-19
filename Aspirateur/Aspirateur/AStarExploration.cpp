@@ -63,7 +63,7 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 			currentNode->room = result.second;
 			currentNode->parent = node;
 			currentNode->cost = node->cost + 1;
-			currentNode->estimatedCost = node->cost + BirdEyeViewDistance(currentNode->room, problem.targetRoom);
+			currentNode->estimatedCost = node->cost + StraightLineDistance(currentNode->room, problem.targetRoom);
 			currentNode->depth = node->depth + 1;
 
 			if(!alreadyExists)
@@ -119,7 +119,7 @@ std::vector<std::pair<actions, Room*>> AStarExploration::getSuccessors(Problem p
 	return successors;
 }
 
-int AStarExploration::BirdEyeViewDistance(const Room* currentRoom, const Room* targetRoom)
+int AStarExploration::StraightLineDistance(const Room* currentRoom, const Room* targetRoom)
 {
 	int difX = currentRoom->getX() - targetRoom->getX();
 	int difY = currentRoom->getY() - targetRoom->getY();

@@ -26,6 +26,6 @@ public:
 
 	Node* graphSearch(Problem problem);
 
-	static int BirdEyeViewDistance(const Room* currentRoom, const Room* targetRoom);
+	static int StraightLineDistance(const Room* currentRoom, const Room* targetRoom);
 };
 
