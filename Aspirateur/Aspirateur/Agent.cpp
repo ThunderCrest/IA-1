@@ -8,11 +8,11 @@
 
 	Agent::Agent(Manor* manor) : m_effector(*this), m_captor(*this)
 	{
-		this->beliefs.m_manor = manor;
+		beliefs.m_manor = manor;
 		beliefs.currentRoom = &this->beliefs.m_manor->getRoom(24);
 		beliefs.currentRoom->setAgent(true);
 		beliefs.performanceMesure = 0;
-		beliefs.lastPerformanceMesure = 0;
+		beliefs.lastPerformanceMesure = INT_MIN;
 		m_bAlive = true;
 		m_bUsingInformedMethod = true;
 		m_bFirstIterationDone = false;
@@ -21,7 +21,9 @@
 		m_maxIterations = 30;
 		m_iterationsToExploration = (m_minIterations + m_maxIterations) / 2;
 		m_currentIterationsToExploration = m_iterationsToExploration;
-		m_iterationModifier = -1;
+		m_iterationModifier = 1;
+		m_currentIterationsToLearning = 0;
+		m_iterationsToLearning = 5;
 		m_lastTickTime = 0;
 		currentDesire = AgentDesires::REST;
 
@@ -37,16 +39,16 @@
 
 		while (m_bAlive)
 		{
-			time(&this->m_currentTickTime);
-			if (this->m_currentTickTime - this->m_lastTickTime > 0)
+			time(&m_currentTickTime);
+			if (m_currentTickTime - m_lastTickTime > 0)
 			{
-				this->m_lastTickTime = this->m_currentTickTime;
+				m_lastTickTime = m_currentTickTime;
 
 				if(m_bFirstIterationDone)
 				{
-					if (this->m_currentIterationsToExploration >= this->m_iterationsToExploration)
+					if (m_currentIterationsToExploration >= m_iterationsToExploration)
 					{
-						this->m_currentIterationsToExploration = 0;
+						m_currentIterationsToExploration = 0;
 						observe();
 						updateState();
 						if(currentDesire == AgentDesires::CLEAN)
@@ -63,7 +65,8 @@
 					actions chosenAction = chooseAction();
 					m_effector.executeAction(chosenAction);
 
-					this->m_currentIterationsToExploration++;
+					m_currentIterationsToExploration++;
+					m_currentIterationsToLearning++;
 				}
 				else
 				{
@@ -72,6 +75,8 @@
 					if(intentions.size() < 1)
 					{
 						m_bFirstIterationDone = true;
+						beliefs.performanceMesure = 0;
+						beliefs.lastPerformanceMesure = 0;
 					}
 				}
 			}
@@ -81,17 +86,7 @@
 	void Agent::switchExplorationMethod()
 	{
 		m_bUsingInformedMethod = !m_bUsingInformedMethod;
-		if (m_bUsingInformedMethod)
-		{
-			std::cout << "Using Informed" << std::endl;
-		}
-		else
-		{
-			std::cout << "Using Uninformed" << std::endl;
-		}
 	}
-
-
 
 
 	void Agent::updateState() 
@@ -105,17 +100,31 @@
 			currentDesire = AgentDesires::CLEAN;
 		}
 
-		if(beliefs.performanceMesure > beliefs.lastPerformanceMesure)
+		updateIterationsAmount();
+	}
+
+	void Agent::updateIterationsAmount()
+	{	
+		if(m_currentIterationsToLearning > m_iterationsToLearning)
 		{
-			if(m_iterationModifier > 0)
+			if (beliefs.performanceMesure - beliefs.lastPerformanceMesure > 5)
 			{
-				m_iterationsToExploration = (m_iterationsToExploration + m_maxIterations) / 2;
+				m_iterationModifier *= -1;
+				m_iterationsToExploration = (m_iterationsToExploration + m_previousIterationsToExploration) / 2;
 			}
-			else
+			else if (beliefs.performanceMesure - beliefs.lastPerformanceMesure < -5)
 			{
-				m_iterationsToExploration = (m_iterationsToExploration + m_minIterations) / 2;
+				if (m_iterationModifier > 0)
+				{
+					m_iterationsToExploration = (m_iterationsToExploration + m_maxIterations) / 2;
+				}
+				else
+				{
+					m_iterationsToExploration = (m_iterationsToExploration + m_minIterations) / 2;
+				}
 			}
-			m_iterationModifier *= -1;
+			beliefs.lastPerformanceMesure = beliefs.performanceMesure;
+			m_currentIterationsToLearning = 0;
 		}
 	}
 
@@ -125,7 +134,6 @@
 		beliefs.currentRoom = &beliefs.m_manor->getRoom(m_captor.getCurrentRoomIndex());
 		beliefs.dustyRooms = m_captor.getDustyRooms();
 		beliefs.roomsWithJewel = m_captor.getRoomsWithJewel();
-		beliefs.lastPerformanceMesure = beliefs.performanceMesure;
 		beliefs.performanceMesure = m_captor.getPerformanceMesure();
 	}
 

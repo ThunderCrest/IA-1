@@ -45,10 +45,14 @@ private:
 	time_t m_currentTickTime;
 
 	int m_iterationsToExploration;
+	int m_previousIterationsToExploration;
 	int m_currentIterationsToExploration;
 	int m_minIterations;
 	int m_maxIterations;
 	int m_iterationModifier;
+
+	int m_currentIterationsToLearning;
+	int m_iterationsToLearning;
 
 	AStarExploration aStar;
 	IterativeDeepeningSearch IDS;
@@ -57,6 +61,8 @@ private:
 
 
 	void updateState();
+
+	void updateIterationsAmount();
 
 	void observe();
 

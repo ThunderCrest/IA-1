@@ -118,7 +118,7 @@
 		if (this->_agent->beliefs.currentRoom->getJewel())
 		{
 			//perte de point ( c'est bien )
-			this->_agent->environment->decreaseScore(3);
+			this->_agent->environment->decreaseScore(2);
 			this->_agent->beliefs.currentRoom->setJewel(false);
 		}
 	}
