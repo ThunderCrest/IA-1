@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,7 +29,6 @@ public:
 	void setAgent(bool isPresent);
 
 	// autre fonction
-	void PickupJewel();
 
 	void initRoom();
 
@@ -42,7 +41,7 @@ private:
 
 };
 
-// Ajout d'un opérateur pour pouvoir verifier si deux rooms sont identiques
+// Ajout d'un opï¿½rateur pour pouvoir verifier si deux rooms sont identiques
 inline bool operator==(const Room& lhs, const Room& rhs)
 {
 	if (lhs.getX() == rhs.getX() && lhs.getY() == rhs.getY() && lhs.getDirt() == rhs.getDirt() && lhs.getJewel() == rhs.getJewel())
@@ -53,7 +52,7 @@ inline bool operator==(const Room& lhs, const Room& rhs)
 }
 
 
-// Ajout d'un opérateur pour pouvoir afficher les poussieres, les bijoux et l'agent dans une pièce, et gere les couleurs
+// Ajout d'un opï¿½rateur pour pouvoir afficher les poussieres, les bijoux et l'agent dans une piï¿½ce, et gere les couleurs
 inline std::ostream& operator<<(std::ostream& out, Room& r)
 {
 	if (r.getDirt())

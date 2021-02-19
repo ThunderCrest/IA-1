@@ -1,4 +1,4 @@
-#include "Room.h"
+ï»¿#include "Room.h"
 #include <iostream>
 #include <random>
 #include <time.h>
@@ -7,7 +7,7 @@
 
 Room::Room(int x, int y)
 {
-	// Création d'une pièce avec des coordonées passées en paramètre
+	// Crï¿½ation d'une piï¿½ce avec des coordonï¿½es passï¿½es en paramï¿½tre
 	m_x = x;
 	m_y = y;
 	m_jewel = false;
@@ -31,12 +31,12 @@ int Room::getY() const
 	return m_y;
 }
 
-// Retourne true s'il y a un bijou dans la pièce
+// Retourne true s'il y a un bijou dans la piï¿½ce
 bool Room::getJewel() const
 {
 	return m_jewel;
 }
-// Idem pour la poussière
+// Idem pour la poussiï¿½re
 bool Room::getDirt() const
 {
 	return m_dirt;
@@ -47,12 +47,12 @@ bool Room::getAgent() const
 	return m_agent;
 }
 
-// Ajout ou enlève un bijou
+// Ajout ou enlï¿½ve un bijou
 void Room::setJewel(bool isPresent)
 {
 	m_jewel = isPresent;
 }
-// idem pour la poussière
+// idem pour la poussiï¿½re
 void Room::setDirt(bool isPresent)
 {
 	m_dirt = isPresent;
@@ -63,7 +63,7 @@ void Room::setAgent(bool isPresent)
 	m_agent = isPresent;
 }
 
-// Permet de tirer un chiffre aléatoirement entre un min et un max
+// Permet de tirer un chiffre alï¿½atoirement entre un min et un max
 int RandInit(int min, int max)
 {
 	std::random_device crypto_random_generator;
@@ -72,16 +72,8 @@ int RandInit(int min, int max)
 	return result;
 }
 
-void Room::PickupJewel()
-{
-	if (m_jewel)
-	{
-		//Notify jewel pickup
-	}
-	setJewel(false);
-}
 
-// Initie un pièce en lui donnant aléatoirement un bijou et/ ou une pièce (ou aucune des deux)
+// Initie un piï¿½ce en lui donnant alï¿½atoirement un bijou et/ ou une piï¿½ce (ou aucune des deux)
 void Room::initRoom()
 {
 	int rangeJewel = 0;
