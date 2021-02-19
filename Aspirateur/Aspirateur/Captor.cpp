@@ -6,6 +6,8 @@
 		this->_agent = &agent;
 	}
 
+
+	//Récupère l'index de la salle où l'agent est présent
 	int Captor::getCurrentRoomIndex()
 	{
 		int index = 0;
@@ -14,7 +16,6 @@
 			{
 				if (room.getAgent() == true)
 				{
-					this->_agent->beliefs.currentRoom = &room;
 					return index;
 				}
 				index++;
@@ -22,6 +23,7 @@
 		return -1 ;
 	}
 
+	//Récupère les pièces avec de la poussière 
 	std::vector<Room*> Captor::getDustyRooms()
 	{
 		std::vector<Room*> dustyRooms;
@@ -32,10 +34,10 @@
 				dustyRooms.push_back(&room);
 			}
 		}
-		this->_agent->beliefs.dustyRooms = dustyRooms;
 		return dustyRooms;
 	}
 
+	//récupère les pièces avec des bijoux
 	std::vector<Room*> Captor::getRoomsWithJewel()
 	{
 		std::vector<Room*> roomsWithJewel;
@@ -46,10 +48,10 @@
 				roomsWithJewel.push_back(&room);
 			}
 		}
-		this->_agent->beliefs.roomsWithJewel = roomsWithJewel;
 		return roomsWithJewel;
 	}
 
+	//récupère la mesure de performance depuis l'environnement 
 	int Captor::getPerformanceMesure()
 	{
 		return this->_agent->environment->getScore();
