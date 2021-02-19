@@ -1,6 +1,7 @@
 #include "IterativeDeepeningSearch.h"
 #include "Node.h"
 
+//Le test d'atteinte de but test si la salle du noeud courant et est la salle cible
 bool IterativeDeepeningSearch::goalTest(Problem problem, Node* node)
 {
 	if (node->room == problem.targetRoom) return true;
@@ -16,6 +17,7 @@ std::vector<Node*> IterativeDeepeningSearch::expand(Node* node, Problem problem)
 	{
 		bool alreadyExists = false;
 		Node* currentNode = nullptr;
+		//Si il y a déjà un noeud pour la salle, on l'utilise
 		if (roomToNode.find(result.second) != roomToNode.end())
 		{
 			currentNode = roomToNode.at(result.second);
@@ -25,6 +27,7 @@ std::vector<Node*> IterativeDeepeningSearch::expand(Node* node, Problem problem)
 		{
 			currentNode = new Node();
 		}
+		//Si le coût du déplacement est plus petit que le coût courant pour ce rendre au Noeud, on le mets à jour. Le coût par défaut est INT_MAX
 		if (node->cost + 1 < currentNode->cost)
 		{
 			currentNode->actionToReach = result.first;
@@ -33,6 +36,7 @@ std::vector<Node*> IterativeDeepeningSearch::expand(Node* node, Problem problem)
 			currentNode->cost = node->cost + 1;
 			currentNode->depth = node->depth + 1;
 
+			//Si le noeud existait déjà pour la salle, on ne l'ajoute pas aux successeurs, pour éviter des boucles
 			if (!alreadyExists)
 			{
 				successors.push_back(currentNode);
@@ -44,6 +48,7 @@ std::vector<Node*> IterativeDeepeningSearch::expand(Node* node, Problem problem)
 	return successors;
 }
 
+//La méthode retourne les paires contenant les salles successeurs accompagnées des actions pour s'y rendre
 std::vector<std::pair<actions, Room*>> IterativeDeepeningSearch::getSuccessors(Problem problem, Room* room)
 {
 	std::vector<std::pair<actions, Room*>> successors;
@@ -88,10 +93,6 @@ std::vector<std::pair<actions, Room*>> IterativeDeepeningSearch::getSuccessors(P
 
 DLSResult IterativeDeepeningSearch::DepthLimitedSearch(Problem problem, int limit)
 {
-	for (auto pair : roomToNode)
-	{
-		//delete pair.second;
-	}
 	roomToNode.clear();
 
 	Node* initialNode = new Node();
@@ -145,6 +146,7 @@ DLSResult IterativeDeepeningSearch::RecursiveDLS(Node* node, Problem problem, in
 	return result;
 }
 
+//La profondeur est limitée à 25, puisque nous avons 25 salles dans l'environnement
 Node* IterativeDeepeningSearch::treeSearch(Problem problem)
 {
 	DLSResult result;

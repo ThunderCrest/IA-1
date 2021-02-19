@@ -3,15 +3,13 @@
 #include <algorithm>
 #include <math.h>
 
+//La méthode de recherche
 Node* AStarExploration::graphSearch(Problem problem)
 {
-	for(auto pair : roomToNode)
-	{
-		//delete pair.second;
-	}
 	roomToNode.clear();
 	fringe.clear();
 
+	//initialisation du noeud de départ
 	Node* initialNode = new Node();
 	initialNode->room = problem.startingRoom;
 	initialNode->cost = 0;
@@ -33,6 +31,7 @@ Node* AStarExploration::graphSearch(Problem problem)
 	return nullptr;
 }
 
+//Le test d'atteinte de but test si la salle du noeud courant et est la salle cible
 bool AStarExploration::goalTest(Problem problem, Node* node)
 {
 	if (node->room == problem.targetRoom) return true;
@@ -48,6 +47,7 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 	{
 		bool alreadyExists = false;
 		Node* currentNode = nullptr;
+		//Si il y a déjà un noeud pour la salle, on l'utilise
 		if(roomToNode.find(result.second) != roomToNode.end())
 		{
 			currentNode = roomToNode.at(result.second);
@@ -57,15 +57,18 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 		{
 			currentNode = new Node();
 		}
+		//Si le coût du déplacement est plus petit que le coût courant pour ce rendre au Noeud, on le mets à jour. Le coût par défaut est INT_MAX
 		if(node->cost + 1 < currentNode->cost)
 		{
 			currentNode->actionToReach = result.first;
 			currentNode->room = result.second;
 			currentNode->parent = node;
 			currentNode->cost = node->cost + 1;
+			//utilisation de l'heuristique pour calculer le coût estimer jusqu'à la cible
 			currentNode->estimatedCost = node->cost + StraightLineDistance(currentNode->room, problem.targetRoom);
 			currentNode->depth = node->depth + 1;
 
+			//Si le noeud existait déjà pour la salle, on ne l'ajoute pas aux successeurs, pour éviter des boucles
 			if(!alreadyExists)
 			{
 				successors.push_back(currentNode);
@@ -77,6 +80,7 @@ std::vector<Node*> AStarExploration::expand(Node* node, Problem problem)
 	return successors;
 }
 
+//La méthode retourne les paires contenant les salles successeurs accompagnées des actions pour s'y rendre
 std::vector<std::pair<actions, Room*>> AStarExploration::getSuccessors(Problem problem, Room* room)
 {
 	std::vector<std::pair<actions, Room*>> successors;
@@ -119,6 +123,7 @@ std::vector<std::pair<actions, Room*>> AStarExploration::getSuccessors(Problem p
 	return successors;
 }
 
+//Pour l'heuristique, nous avons utilisé la distance à vol d'oiseau
 int AStarExploration::StraightLineDistance(const Room* currentRoom, const Room* targetRoom)
 {
 	int difX = currentRoom->getX() - targetRoom->getX();
