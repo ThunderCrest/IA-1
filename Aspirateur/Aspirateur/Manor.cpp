@@ -4,7 +4,7 @@
 
 Manor::Manor(int width, int height)
 {
-	
+	// Création d'un manoir rempli de pièces (matrice width*height)
 	m_sizeX = width;
 	m_sizeY = height;
 
@@ -35,11 +35,13 @@ int Manor::getSizeY()
 	return m_sizeY;
 }
 
+// Retourne toutes les pièces dans un vecteur de pièces
 std::vector<Room>& Manor::getRooms()
 {
 	return m_rooms;
 }
 
+// retourne une pièce demandée
 Room& Manor::getRoom(int position)
 {
 	if (position < m_rooms.size())
@@ -49,6 +51,7 @@ Room& Manor::getRoom(int position)
 	throw std::logic_error("position trop grande");
 }
 
+// retourne la pièce se trouvant à coté de la pièce courante en fonction de la direction donnée
 Room* Manor::getRoomInDirection(Room* currentRoom, actions direction)
 {
 	Room* room;
@@ -83,6 +86,7 @@ Room* Manor::getRoomInDirection(Room* currentRoom, actions direction)
 	}
 }
 
+// Retourne l'index correspondant à la pièce donnée
 int Manor::findIndex(Room& currentRoom) const
 {
 	for (int i = 0; i < m_rooms.size(); ++i)
@@ -95,6 +99,7 @@ int Manor::findIndex(Room& currentRoom) const
 	return -1;
 }
 
+// Retourne toutes les pièces qui ne sont pas vide
 std::vector<Room*> Manor::getNotEmptyRoom()
 {
 	std::vector<Room*> notEmptyRoom;

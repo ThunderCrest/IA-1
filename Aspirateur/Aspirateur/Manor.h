@@ -30,7 +30,7 @@ private:
 	std::vector<Room> m_rooms;
 };
 
-
+// Permet d'afficher un manoir avec chacune de ses pièces
 inline std::ostream& operator<<(std::ostream& out, Manor& m)
 {
 	int position = 0;

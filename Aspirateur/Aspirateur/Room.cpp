@@ -7,6 +7,7 @@
 
 Room::Room(int x, int y)
 {
+	// Création d'une pièce avec des coordonées passées en paramètre
 	m_x = x;
 	m_y = y;
 	m_jewel = false;
@@ -30,61 +31,45 @@ int Room::getY() const
 	return m_y;
 }
 
+// Retourne true s'il y a un bijou dans la pièce
 bool Room::getJewel() const
 {
 	return m_jewel;
 }
-
+// Idem pour la poussière
 bool Room::getDirt() const
 {
 	return m_dirt;
 }
-
+// Idem pour l'agent
 bool Room::getAgent() const
 {
 	return m_agent;
 }
 
+// Ajout ou enlève un bijou
 void Room::setJewel(bool isPresent)
 {
 	m_jewel = isPresent;
 }
-
+// idem pour la poussière
 void Room::setDirt(bool isPresent)
 {
 	m_dirt = isPresent;
 }
-
+// idem pour l'agent
 void Room::setAgent(bool isPresent)
 {
 	m_agent = isPresent;
 }
 
+// Permet de tirer un chiffre aléatoirement entre un min et un max
 int RandInit(int min, int max)
 {
 	std::random_device crypto_random_generator;
 	std::uniform_int_distribution<int> int_distribution(min, max);
 	int result = int_distribution(crypto_random_generator);
 	return result;
-}
-
-void Room::Vacuum()
-{
-	if (m_dirt) 
-	{
-		//Notify dirt pickup
-	}
-	else 
-	{
-		//Notify dirt pickup error
-	}
-
-	if(m_jewel)
-	{
-		//Notify jewel vacuum
-	}
-	setDirt(false);
-	setJewel(false);
 }
 
 void Room::PickupJewel()
@@ -96,6 +81,7 @@ void Room::PickupJewel()
 	setJewel(false);
 }
 
+// Initie un pièce en lui donnant aléatoirement un bijou et/ ou une pièce (ou aucune des deux)
 void Room::initRoom()
 {
 	int rangeJewel = 0;

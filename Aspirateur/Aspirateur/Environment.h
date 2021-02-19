@@ -3,7 +3,6 @@
 #include <vector>
 #include "Agent.h"
 
-
 class Environment
 {
 public:
